@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import teamPhotoPath from "@assets/Screenshot_2026-02-11_at_5.30.24_PM_1770849319133.png";
 
 const slides = [
   {
@@ -20,9 +21,9 @@ const slides = [
     subtitle: "Digitize field operations across thousands of acres with offline-capable tools for every role.",
   },
   {
-    image: "/images/waldo-jobs.png",
-    title: "Real-Time Progress",
-    subtitle: "Monitor harvest progress and wood flow in real-time with visual dashboards and alerts.",
+    image: teamPhotoPath,
+    title: "The PCT Team",
+    subtitle: "Our dedicated team of forestry professionals bringing digital innovation to every harvest operation.",
   },
 ];
 

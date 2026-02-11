@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import floridaCertPath from "@assets/Screenshot_2026-02-11_at_5.33.11_PM_1770849319157.png";
 import loggerAwardPath from "@assets/Screenshot_2026-02-11_at_4.50.08_PM_1770846613934.png";
-import teamPhotoPath from "@assets/Screenshot_2026-02-11_at_5.30.24_PM_1770849319133.png";
 
 const awards = [
   {
@@ -11,10 +10,6 @@ const awards = [
   {
     title: "National Logger Award - Excellence in Forestry",
     image: loggerAwardPath,
-  },
-  {
-    title: "Prime Cut Timber Team",
-    image: teamPhotoPath,
   },
 ];
 
@@ -44,7 +39,7 @@ export default function AwardsSection() {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
           {awards.map((award, i) => (
             <motion.div
               key={award.title}
