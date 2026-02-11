@@ -4,6 +4,7 @@
 A clone of the Waldo Logs (waldologs.com) forestry platform, rebranded as "Prime Cut Timber" (PCT). The site features digital load ticket management for the forestry industry with a full marketing homepage, admin login, and multiple sub-pages.
 
 ## Recent Changes
+- **Feb 11, 2026**: Major update - Redesigned dropdown menus (Solutions 4-column mega-menu, Who We Serve with 6 roles, Resources with 5 items). Redesigned Contact page to "Talk with an Expert" layout with Martijn Craig Volman. Updated phone to (407) 813-5384. Redesigned Footer with newsletter signup, social icons, comprehensive link columns. Replaced placeholder images with real CDN product screenshots throughout LogoBar, HowItWorks, and Benefits sections.
 - **Feb 11, 2026**: Initial build - Complete homepage with hero, how it works, benefits, integrations, testimonials, FAQ, case studies, blog preview sections. Admin login system with email/password. Sub-pages for Solutions, Who We Serve, Resources. Contact and Pricing pages.
 
 ## Architecture
@@ -30,9 +31,11 @@ A clone of the Waldo Logs (waldologs.com) forestry platform, rebranded as "Prime
 - Primary color: Orange (#E8632E / hsl 18 85% 55%)
 - Font: Montserrat for headings, Open Sans for body
 - Dark/Light mode support via CSS variables
-- Forestry-themed imagery generated for hero, sections, testimonials
+- Product images: Real CDN images from Waldo's asset server used for logo bar, how it works, and benefits sections
+- Contact expert: Martijn Craig Volman (Supply Chain & Implementation)
+- Phone: (407) 813-5384
 
 ## User Preferences
 - Wants the site to closely match waldologs.com structure
 - Brand name: "Prime Cut Timber" with "PCT" abbreviation badge
-- User will provide custom graphics later to replace generated images
+- User will provide custom graphics later to replace generated hero/testimonial images

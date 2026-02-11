@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { MapPin, Trees, Truck, CheckCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const steps = [
@@ -7,29 +6,25 @@ const steps = [
     num: "001",
     title: "Harvest Plan Created",
     description: "Control wood flow, increase visibility, and minimize errors for reduction in operational and administrative costs.",
-    icon: MapPin,
-    image: "/images/field-worker.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef36e3d3f86040946044_waldo-jobs.png",
   },
   {
     num: "002",
     title: "Timber is Harvested",
     description: "Track production and inventory to gain a real time view of harvest progress.",
-    icon: Trees,
-    image: "/images/stacked-logs.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef957ab5b8ecfa71192c_waldo-inventory-straight.png",
   },
   {
     num: "003",
     title: "Products Hauled",
     description: "View available loads, real-time destination changes, and verify status across multiple harvest areas.",
-    icon: Truck,
-    image: "/images/timber-truck.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef83661fe935bb1a2fe5_digital-trip-tickets-progress-vertical.png",
   },
   {
     num: "004",
     title: "Delivery is Verified",
     description: "Receive error-free load information, with improved visibility to inbound trucks, while maintaining compliance.",
-    icon: CheckCircle,
-    image: "/images/timber-mill.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef71ad984bfce92e90be_waldo-ai-verification.png",
   },
 ];
 
@@ -70,22 +65,18 @@ export default function HowItWorksSection() {
               viewport={{ once: true }}
             >
               <Card className="overflow-visible group cursor-pointer h-full" data-testid={`card-step-${step.num}`}>
-                <div className="relative overflow-hidden rounded-t-md">
+                <div className="relative overflow-hidden rounded-t-md bg-neutral-100 dark:bg-neutral-800 flex items-center justify-center p-4 h-56">
                   <img
                     src={step.image}
                     alt={step.title}
-                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="max-w-full max-h-full object-contain transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 to-transparent" />
                   <div className="absolute top-3 left-3 flex items-center gap-2">
                     <span className="text-xl font-bold text-orange-400 font-mono">{step.num}</span>
                   </div>
                 </div>
                 <div className="p-5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <step.icon className="w-4 h-4 text-orange-500" />
-                    <h3 className="text-base font-bold text-foreground">{step.title}</h3>
-                  </div>
+                  <h3 className="text-base font-bold text-foreground mb-2">{step.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {step.description}
                   </p>

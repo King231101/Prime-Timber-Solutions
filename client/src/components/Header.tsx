@@ -3,29 +3,66 @@ import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Menu, X, ChevronDown, Phone } from "lucide-react";
 
-const solutionsItems = [
-  { label: "Digital Trip Tickets", href: "/solutions/digital-trip-tickets", desc: "Replace paper with real-time digital load tickets" },
-  { label: "Supply Chain Visibility", href: "/solutions/supply-chain", desc: "Track every load from stump to mill" },
-  { label: "Compliance & Reporting", href: "/solutions/compliance", desc: "Audit-ready reports for FSC, SFI, PEFC" },
-  { label: "Scale Ticket OCR", href: "/solutions/scale-ticket-ocr", desc: "Automated scale slip reading and verification" },
-  { label: "Inventory Management", href: "/solutions/inventory", desc: "Real-time harvest and inventory tracking" },
+const solutionsColumns = [
+  {
+    heading: "HARVEST OPS",
+    items: [
+      { label: "Digital Tickets", href: "/solutions/digital-trip-tickets" },
+      { label: "Harvest Management", href: "/solutions/harvest-management" },
+      { label: "Communications", href: "/solutions/communications" },
+      { label: "Scale Slip OCR", href: "/solutions/scale-ticket-ocr" },
+    ],
+  },
+  {
+    heading: "FINANCE",
+    items: [
+      { label: "Settlements", href: "/solutions/settlements" },
+      { label: "Integrations", href: "/solutions/integrations" },
+      { label: "Invoicing", href: "/solutions/invoicing" },
+    ],
+  },
+  {
+    heading: "INTELLIGENCE",
+    items: [
+      { label: "Reporting", href: "/solutions/reporting" },
+      { label: "AI Scale Verification", href: "/solutions/ai-scale-verification" },
+      { label: "Quota Control", href: "/solutions/quota-control" },
+      { label: "Analytics", href: "/solutions/analytics" },
+    ],
+  },
+  {
+    heading: "SECURITY & COMPLIANCE",
+    items: [
+      { label: "Chain of Custody Reporting", href: "/solutions/chain-of-custody" },
+      { label: "Fiber Security", href: "/solutions/fiber-security" },
+      { label: "Auditing", href: "/solutions/auditing" },
+      { label: "EUDR Data Export", href: "/solutions/eudr-data-export" },
+    ],
+  },
 ];
 
+const solutionsMobileItems = solutionsColumns.flatMap((col) =>
+  col.items.map((item) => ({ label: item.label, href: item.href, desc: "" }))
+);
+
 const whoWeServeItems = [
-  { label: "Land Managers", href: "/who-we-serve/land-managers", desc: "Control wood flow and increase visibility" },
-  { label: "Loggers", href: "/who-we-serve/loggers", desc: "Track production and inventory in real time" },
-  { label: "Truckers", href: "/who-we-serve/truckers", desc: "View loads and verify status across harvests" },
-  { label: "Mills", href: "/who-we-serve/mills", desc: "Receive error-free load information" },
+  { label: "Land Owners", href: "/who-we-serve/land-owners", desc: "" },
+  { label: "Land Managers", href: "/who-we-serve/land-managers", desc: "" },
+  { label: "Loggers", href: "/who-we-serve/loggers", desc: "" },
+  { label: "Truckers", href: "/who-we-serve/truckers", desc: "" },
+  { label: "Mills", href: "/who-we-serve/mills", desc: "" },
+  { label: "Certification Managers", href: "/who-we-serve/certification-managers", desc: "" },
 ];
 
 const resourcesItems = [
-  { label: "Case Studies", href: "/resources/case-studies", desc: "See how forestry companies use PCT" },
-  { label: "Blog", href: "/resources/blog", desc: "Product updates and industry insights" },
-  { label: "Integrations", href: "/resources/integrations", desc: "Connect with your existing workflow" },
-  { label: "FAQ", href: "/resources/faq", desc: "Frequently asked questions" },
+  { label: "Platform", href: "/resources/platform", desc: "" },
+  { label: "Case Studies", href: "/resources/case-studies", desc: "" },
+  { label: "Integrations", href: "/resources/integrations", desc: "" },
+  { label: "About Us", href: "/resources/about-us", desc: "" },
+  { label: "FAQ's", href: "/resources/faq", desc: "" },
 ];
 
-function DropdownMenu({ items, isOpen, onClose }: { items: typeof solutionsItems; isOpen: boolean; onClose: () => void }) {
+function SolutionsMegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -43,18 +80,83 @@ function DropdownMenu({ items, isOpen, onClose }: { items: typeof solutionsItems
   return (
     <div
       ref={ref}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-80 bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-700 shadow-lg z-50 py-2 overflow-hidden"
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-700 shadow-xl z-50 overflow-hidden"
+      style={{ width: "min(56rem, 90vw)" }}
+      data-testid="solutions-mega-menu"
+    >
+      <div className="bg-neutral-900 dark:bg-neutral-800 px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
+        <div className="flex items-center gap-3">
+          <span className="text-lg font-extrabold text-orange-500" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+            PRIME CUT TIMBER
+          </span>
+          <span className="text-sm text-neutral-300">The Forestry Platform For All</span>
+        </div>
+        <Link href="/resources/platform">
+          <Button
+            variant="default"
+            className="bg-orange-600 border-orange-600 text-white font-semibold rounded-md"
+            onClick={onClose}
+            data-testid="button-discover-platform"
+          >
+            Discover the Platform
+          </Button>
+        </Link>
+      </div>
+      <div className="grid grid-cols-4 gap-0 px-6 py-6">
+        {solutionsColumns.map((col) => (
+          <div key={col.heading}>
+            <div className="text-[11px] font-semibold tracking-wider text-neutral-400 dark:text-neutral-500 uppercase mb-3">
+              {col.heading}
+            </div>
+            <div className="space-y-1">
+              {col.items.map((item) => (
+                <Link key={item.href} href={item.href}>
+                  <div
+                    className="py-2 text-sm font-semibold text-neutral-800 dark:text-neutral-200 cursor-pointer hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
+                    onClick={onClose}
+                    data-testid={`dropdown-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                  >
+                    {item.label}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function SimpleDropdownMenu({ items, isOpen, onClose }: { items: typeof whoWeServeItems; isOpen: boolean; onClose: () => void }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        onClose();
+      }
+    }
+    if (isOpen) document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      ref={ref}
+      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-64 bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-700 shadow-lg z-50 py-3 overflow-hidden"
       data-testid="dropdown-menu"
     >
       {items.map((item) => (
         <Link key={item.href} href={item.href}>
           <div
-            className="px-4 py-3 hover-elevate cursor-pointer"
+            className="px-5 py-3 text-sm font-semibold text-neutral-800 dark:text-neutral-200 cursor-pointer hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
             onClick={onClose}
             data-testid={`dropdown-item-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
           >
-            <div className="text-sm font-semibold text-foreground">{item.label}</div>
-            <div className="text-xs text-muted-foreground mt-0.5">{item.desc}</div>
+            {item.label}
           </div>
         </Link>
       ))}
@@ -107,7 +209,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-6 flex-wrap" data-testid="desktop-nav">
+          <nav className="hidden lg:flex items-center gap-6" data-testid="desktop-nav">
             <div className="relative">
               <button
                 className={navLinkClass}
@@ -116,7 +218,7 @@ export default function Header() {
               >
                 Solutions <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "solutions" ? "rotate-180" : ""}`} />
               </button>
-              <DropdownMenu items={solutionsItems} isOpen={activeDropdown === "solutions"} onClose={() => setActiveDropdown(null)} />
+              <SolutionsMegaMenu isOpen={activeDropdown === "solutions"} onClose={() => setActiveDropdown(null)} />
             </div>
 
             <div className="relative">
@@ -127,7 +229,7 @@ export default function Header() {
               >
                 Who We Serve <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "who-we-serve" ? "rotate-180" : ""}`} />
               </button>
-              <DropdownMenu items={whoWeServeItems} isOpen={activeDropdown === "who-we-serve"} onClose={() => setActiveDropdown(null)} />
+              <SimpleDropdownMenu items={whoWeServeItems} isOpen={activeDropdown === "who-we-serve"} onClose={() => setActiveDropdown(null)} />
             </div>
 
             <Link href="/pricing">
@@ -142,7 +244,7 @@ export default function Header() {
               >
                 Resources <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${activeDropdown === "resources" ? "rotate-180" : ""}`} />
               </button>
-              <DropdownMenu items={resourcesItems} isOpen={activeDropdown === "resources"} onClose={() => setActiveDropdown(null)} />
+              <SimpleDropdownMenu items={resourcesItems} isOpen={activeDropdown === "resources"} onClose={() => setActiveDropdown(null)} />
             </div>
 
             <Link href="/contact">
@@ -151,9 +253,9 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center gap-3 flex-wrap">
-            <a href="tel:+19062815000" className="flex items-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300" data-testid="phone-link">
+            <a href="tel:+14078135384" className="flex items-center gap-2 text-sm font-medium text-neutral-600 dark:text-neutral-300" data-testid="phone-link">
               <Phone className="w-4 h-4 text-orange-500" />
-              (906) 281-5000
+              (407) 813-5384
             </a>
             <Link href="/contact">
               <Button variant="default" className="bg-orange-600 border-orange-600 text-white font-semibold rounded-md" data-testid="button-talk-expert">
@@ -180,7 +282,7 @@ export default function Header() {
       {mobileOpen && (
         <div className="lg:hidden bg-white dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-800 shadow-lg" data-testid="mobile-menu">
           <div className="px-4 py-4 space-y-1">
-            <MobileDropdown label="Solutions" items={solutionsItems} />
+            <MobileDropdown label="Solutions" items={solutionsMobileItems} />
             <MobileDropdown label="Who We Serve" items={whoWeServeItems} />
             <Link href="/pricing">
               <div className="py-3 px-3 text-sm font-medium text-neutral-700 dark:text-neutral-200" data-testid="mobile-nav-pricing">
@@ -194,9 +296,9 @@ export default function Header() {
               </div>
             </Link>
             <div className="pt-4 space-y-2 border-t border-neutral-100 dark:border-neutral-800">
-              <a href="tel:+19062815000" className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300">
+              <a href="tel:+14078135384" className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-300">
                 <Phone className="w-4 h-4 text-orange-500" />
-                (906) 281-5000
+                (407) 813-5384
               </a>
               <Link href="/contact">
                 <Button variant="default" className="w-full bg-orange-600 border-orange-600 text-white font-semibold" data-testid="mobile-button-expert">
@@ -216,7 +318,7 @@ export default function Header() {
   );
 }
 
-function MobileDropdown({ label, items }: { label: string; items: typeof solutionsItems }) {
+function MobileDropdown({ label, items }: { label: string; items: { label: string; href: string; desc: string }[] }) {
   const [open, setOpen] = useState(false);
   return (
     <div>

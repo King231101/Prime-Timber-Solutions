@@ -1,55 +1,47 @@
 import { motion } from "framer-motion";
-import { Eye, Wifi, WifiOff, ShieldCheck, FileCheck, Database, Globe } from "lucide-react";
 
 const benefits = [
   {
-    icon: Eye,
     tag: "PCT",
     title: "One Shared Source of Truth",
     description: "Everyone sees the same ticket, at the same time. No paper slips, no re-entry, no disputes. Trust goes up. Operations move faster.",
-    image: "/images/app-devices.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/697fb64efcb938640a0e0b4b_waldo-inventory-tilted.png",
   },
   {
-    icon: Wifi,
     tag: "PCT",
     title: "Real-Time Visibility (Without Phone Calls)",
     description: "See every load as it moves from stump to scale. Track pickup, delivery, volume, and destination in real time — no calls or paperwork.",
-    image: "/images/field-worker.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696febb0eaa313675d8c978c_waldo-inventory-graph-tilted.png",
   },
   {
-    icon: WifiOff,
     tag: "PCT",
     title: "Built for the Field — Offline, Fast and Simple",
     description: "Built for the cab and the landing, not the office. Create, haul, and deliver tickets in seconds — even with no cell service.",
-    image: "/images/timber-truck.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696febd55e916d92d2b09453_digital-trip-tickets-create.png",
   },
   {
-    icon: ShieldCheck,
     tag: "PCT",
     title: "Fewer Errors, Less Rework",
     description: "No lost slips. No handwriting issues. No manual data entry across systems. PCT reads, verifies, and attaches scale data directly to each load ticket.",
-    image: "/images/stacked-logs.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696feba36c909755618ad87d_scale-slip-ocr.png",
   },
   {
-    icon: FileCheck,
     tag: "PCT",
     title: "Audit-Ready by Default",
     description: "Every ticket is timestamped, geotagged, and traceable from stump to scale. Generate audit-ready reports for FSC, SFI, PEFC, and EUDR in minutes.",
-    image: "/images/timber-mill.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696feb920b4e6fa024ce38d0_waldo-trip-ticket-details-tilted.png",
   },
   {
-    icon: Database,
     tag: "PCT",
     title: "Foundation for Everything Downstream",
     description: "Settlements, reporting, compliance, integrations — all start with a clean ticket.",
-    image: "/images/app-devices.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/697fb559793f6f3cf91ddaa2_computer-trip-ticket-export.png",
   },
   {
-    icon: Globe,
     tag: "PCT",
     title: "Works Across Every Supply Chain",
     description: "Built to work in every forestry region across the U.S. and Canada. PCT supports any wood sort, destination, unit of measure, and flow.",
-    image: "/images/forest-bg.png",
+    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696feda371d14b9d2cbfb505_waldo-desktop-maps.png",
   },
 ];
 
@@ -93,18 +85,16 @@ export default function BenefitsSection() {
                 data-testid={`benefit-item-${i}`}
               >
                 <div className="flex-1 w-full">
-                  <div className="relative overflow-hidden rounded-md">
+                  <div className="relative overflow-hidden rounded-md bg-neutral-50 dark:bg-neutral-800 flex items-center justify-center p-6">
                     <img
                       src={benefit.image}
                       alt={benefit.title}
-                      className="w-full h-64 sm:h-80 object-cover"
+                      className="max-w-full h-auto object-contain max-h-80"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/30 to-transparent" />
                   </div>
                 </div>
                 <div className="flex-1 w-full">
                   <div className="flex items-center gap-2 mb-3">
-                    <benefit.icon className="w-5 h-5 text-orange-500" />
                     <span className="text-xs font-semibold tracking-wider uppercase text-orange-500">{benefit.tag}</span>
                   </div>
                   <h3
