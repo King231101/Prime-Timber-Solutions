@@ -80,7 +80,7 @@ export default function HeroSection() {
           >
             <div className="relative">
               <img
-                src="/images/app-devices.png"
+                src="https://cdn.prod.website-files.com/6804566cfd0cbde4d4166890/696fe95234a3c98edcfe41ee_digital-trip-tickets-progress.png"
                 alt="Prime Cut Timber digital platform on devices"
                 className="w-full rounded-md"
                 data-testid="img-hero-devices"
