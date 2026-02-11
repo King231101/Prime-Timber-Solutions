@@ -5,22 +5,22 @@ import { Button } from "@/components/ui/button";
 
 const slides = [
   {
-    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef36e3d3f86040946044_waldo-jobs.png",
+    image: "/images/waldo-jobs.png",
     title: "Digital Job Management",
     subtitle: "Create and manage harvest jobs with real-time status tracking across your entire operation.",
   },
   {
-    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef36d5d2e2b2b21f98f4_waldo-loads.png",
+    image: "/images/rowlee-farms-trucking.jpg",
     title: "Load Tracking & Tickets",
     subtitle: "Replace paper tickets with digital load tracking that works offline and syncs automatically.",
   },
   {
-    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/696fef368e7f2b7a9e51a6a1_waldo-settlements.png",
-    title: "Automated Settlements",
-    subtitle: "Generate accurate settlements in seconds, not days. Eliminate disputes with transparent data.",
+    image: "/images/lyme-great-lakes-timberlands.jpg",
+    title: "In the Field Operations",
+    subtitle: "Digitize field operations across thousands of acres with offline-capable tools for every role.",
   },
   {
-    image: "https://cdn.prod.website-files.com/6804566cfd0cbde4d41668f7/6811a55ed30cd6e7ac0621e3_digital-trip-tickets-progress.png",
+    image: "/images/waldo-jobs.png",
     title: "Real-Time Progress",
     subtitle: "Monitor harvest progress and wood flow in real-time with visual dashboards and alerts.",
   },
@@ -29,21 +29,29 @@ const slides = [
 export default function ImageCarouselSection() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [resetKey, setResetKey] = useState(0);
+
+  const autoNext = useCallback(() => {
+    setDirection(1);
+    setCurrent((prev) => (prev + 1) % slides.length);
+  }, []);
 
   const next = useCallback(() => {
     setDirection(1);
     setCurrent((prev) => (prev + 1) % slides.length);
+    setResetKey((k) => k + 1);
   }, []);
 
   const prev = useCallback(() => {
     setDirection(-1);
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
+    setResetKey((k) => k + 1);
   }, []);
 
   useEffect(() => {
-    const timer = setInterval(next, 5000);
+    const timer = setInterval(autoNext, 5000);
     return () => clearInterval(timer);
-  }, [next]);
+  }, [autoNext, resetKey]);
 
   const variants = {
     enter: (dir: number) => ({
@@ -84,6 +92,7 @@ export default function ImageCarouselSection() {
                   key={current}
                   src={slides[current].image}
                   alt={slides[current].title}
+                  referrerPolicy="no-referrer"
                   className="absolute inset-0 w-full h-full object-cover"
                   custom={direction}
                   variants={variants}
@@ -146,6 +155,7 @@ export default function ImageCarouselSection() {
               onClick={() => {
                 setDirection(i > current ? 1 : -1);
                 setCurrent(i);
+                setResetKey((k) => k + 1);
               }}
               className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                 i === current ? "bg-orange-500 w-6" : "bg-neutral-600"

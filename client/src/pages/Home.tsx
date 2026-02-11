@@ -13,6 +13,7 @@ import CaseStudiesSection from "@/components/CaseStudiesSection";
 import FAQSection from "@/components/FAQSection";
 import ImageCarouselSection from "@/components/ImageCarouselSection";
 import AwardsSection from "@/components/AwardsSection";
+import CTABannerSection from "@/components/CTABannerSection";
 import BlogPreviewSection from "@/components/BlogPreviewSection";
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
         <CaseStudiesSection />
         <ImageCarouselSection />
         <FAQSection />
+        <CTABannerSection />
         <AwardsSection />
         <BlogPreviewSection />
       </main>

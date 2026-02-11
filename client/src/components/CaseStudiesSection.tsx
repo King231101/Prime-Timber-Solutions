@@ -7,13 +7,13 @@ const caseStudies = [
     category: "Land Owner / Land Manager",
     company: "Lyme Great Lakes Timberlands",
     description: "Lyme Great Lakes Timberlands partnered with PCT to digitize field operations across 600,000 acres, eliminating paper tickets, streamlining compliance, and integrating with LIMS for faster, more accurate, and transparent forest management.",
-    image: "/images/forest-bg.png",
+    image: "/images/lyme-great-lakes-timberlands.jpg",
   },
   {
     category: "Trucking",
     company: "Rowlee Farms Trucking",
     description: "PCT enabled Rowlee Farms to go fully paperless with an offline-first mobile platform that streamlined load tracking, improved payment speed, and reduced admin work and disputes.",
-    image: "/images/timber-truck.png",
+    image: "/images/rowlee-farms-trucking.jpg",
   },
   {
     category: "Logging",

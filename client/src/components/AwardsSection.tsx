@@ -1,17 +1,20 @@
 import { motion } from "framer-motion";
+import floridaCertPath from "@assets/Screenshot_2026-02-11_at_5.33.11_PM_1770849319157.png";
+import loggerAwardPath from "@assets/Screenshot_2026-02-11_at_4.50.08_PM_1770846613934.png";
+import teamPhotoPath from "@assets/Screenshot_2026-02-11_at_5.30.24_PM_1770849319133.png";
 
 const awards = [
   {
-    title: "Excellence in Digital Forestry",
-    image: "/images/award-recognition.png",
+    title: "State of Florida - Logging & Timber Industry Recognition",
+    image: floridaCertPath,
   },
   {
-    title: "Outstanding Achievement Award",
-    image: "/images/award-achievement.png",
+    title: "National Logger Award - Excellence in Forestry",
+    image: loggerAwardPath,
   },
   {
-    title: "Processing Excellence Certification",
-    image: "/images/award-processing.png",
+    title: "Prime Cut Timber Team",
+    image: teamPhotoPath,
   },
 ];
 
