@@ -6,10 +6,28 @@ import { useToast } from "@/hooks/use-toast";
 import { LogOut, LayoutDashboard, Users, FileText, Settings, BarChart3 } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
+interface UserWithCompanies {
+  id: string;
+  phone: string;
+  firstName: string | null;
+  lastName: string | null;
+  dateOfBirth: string | null;
+  unitPreference: string | null;
+  isRegistered: boolean | null;
+  createdAt: string | null;
+  companies: {
+    id: string;
+    name: string;
+    roles: string[] | null;
+  }[];
+}
+
 export default function Admin() {
   const [, setLocation] = useLocation();
   const [isAuthed, setIsAuthed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [registeredUsers, setRegisteredUsers] = useState<UserWithCompanies[]>([]);
+  const [usersLoading, setUsersLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -21,6 +39,7 @@ export default function Admin() {
       const res = await fetch("/api/admin/me", { credentials: "include" });
       if (res.ok) {
         setIsAuthed(true);
+        loadUsers();
       } else {
         setLocation("/login");
       }
@@ -28,6 +47,21 @@ export default function Admin() {
       setLocation("/login");
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const loadUsers = async () => {
+    setUsersLoading(true);
+    try {
+      const res = await fetch("/api/admin/users", { credentials: "include" });
+      if (res.ok) {
+        const data = await res.json();
+        setRegisteredUsers(data);
+      }
+    } catch {
+      // silently fail
+    } finally {
+      setUsersLoading(false);
     }
   };
 
@@ -51,10 +85,12 @@ export default function Admin() {
 
   if (!isAuthed) return null;
 
+  const registeredCount = registeredUsers.filter(u => u.isRegistered).length;
+
   const stats = [
     { label: "Active Harvest Areas", value: "847", icon: BarChart3 },
     { label: "Digital Tickets Today", value: "2,341", icon: FileText },
-    { label: "Active Users", value: "1,208", icon: Users },
+    { label: "Registered Users", value: String(registeredCount), icon: Users },
     { label: "Uptime", value: "99.9%", icon: Settings },
   ];
 
@@ -108,6 +144,80 @@ export default function Admin() {
             </Card>
           ))}
         </div>
+
+        <Card className="p-6 mb-8" data-testid="card-registered-users">
+          <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
+            <h3 className="text-base font-bold text-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+              Registered Users
+            </h3>
+            <Button variant="outline" onClick={loadUsers} disabled={usersLoading} data-testid="button-refresh-users">
+              {usersLoading ? "Loading..." : "Refresh"}
+            </Button>
+          </div>
+
+          {registeredUsers.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-4 text-center" data-testid="text-no-users">
+              No registered users yet.
+            </p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm" data-testid="table-users">
+                <thead>
+                  <tr className="border-b border-neutral-200 dark:border-neutral-700">
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Name</th>
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Phone</th>
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">DOB</th>
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Registered</th>
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Companies</th>
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Roles</th>
+                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Joined</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {registeredUsers.map((user) => (
+                    <tr
+                      key={user.id}
+                      className="border-b border-neutral-100 dark:border-neutral-800 last:border-0"
+                      data-testid={`user-row-${user.id}`}
+                    >
+                      <td className="py-3 px-2 font-medium text-foreground">
+                        {user.firstName && user.lastName
+                          ? `${user.firstName} ${user.lastName}`
+                          : "—"}
+                      </td>
+                      <td className="py-3 px-2 text-muted-foreground">{user.phone}</td>
+                      <td className="py-3 px-2 text-muted-foreground">{user.dateOfBirth || "—"}</td>
+                      <td className="py-3 px-2">
+                        <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${
+                          user.isRegistered
+                            ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                            : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+                        }`}>
+                          {user.isRegistered ? "Yes" : "No"}
+                        </span>
+                      </td>
+                      <td className="py-3 px-2 text-muted-foreground">
+                        {user.companies.length > 0
+                          ? user.companies.map(c => c.name).join(", ")
+                          : "—"}
+                      </td>
+                      <td className="py-3 px-2 text-muted-foreground">
+                        {user.companies.length > 0
+                          ? user.companies.flatMap(c => c.roles || []).join(", ") || "—"
+                          : "—"}
+                      </td>
+                      <td className="py-3 px-2 text-muted-foreground text-xs">
+                        {user.createdAt
+                          ? new Date(user.createdAt).toLocaleDateString()
+                          : "—"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Card>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className="p-6" data-testid="card-recent-activity">
