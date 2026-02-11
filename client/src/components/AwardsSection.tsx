@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import floridaCertPath from "@assets/Screenshot_2026-02-11_at_5.33.11_PM_1770849319157.png";
-import loggerAwardPath from "@assets/Screenshot_2026-02-11_at_4.50.08_PM_1770846613934.png";
+import loggerAwardPath from "@assets/national-logger-award-22jan.png";
 
 const awards = [
   {
