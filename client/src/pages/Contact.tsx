@@ -7,6 +7,8 @@ import { Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
+import martijnPhoto from "@assets/IMG_0610_1770844232329.jpg";
 
 const roleOptions = [
   "Land Manager",
@@ -20,12 +22,25 @@ const roleOptions = [
 
 export default function Contact() {
   const [formData, setFormData] = useState({ role: "", name: "", email: "", phone: "", company: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours." });
-    setFormData({ role: "", name: "", email: "", phone: "", company: "" });
+    if (!formData.name || !formData.email) {
+      toast({ title: "Please fill in required fields", variant: "destructive" });
+      return;
+    }
+    setIsSubmitting(true);
+    try {
+      await apiRequest("POST", "/api/contact", formData);
+      toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours." });
+      setFormData({ role: "", name: "", email: "", phone: "", company: "" });
+    } catch {
+      toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -55,8 +70,13 @@ export default function Contact() {
                 </p>
 
                 <div className="flex items-center gap-4 mb-10 p-4 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 max-w-sm">
-                  <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center flex-shrink-0">
-                    <span className="text-lg font-bold text-orange-600">MV</span>
+                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                    <img
+                      src={martijnPhoto}
+                      alt="Martijn Craig Volman"
+                      className="w-full h-full object-cover"
+                      data-testid="img-expert-photo"
+                    />
                   </div>
                   <div>
                     <div className="text-sm font-bold text-foreground" data-testid="text-expert-name">Martijn Craig Volman</div>
@@ -162,10 +182,11 @@ export default function Contact() {
 
                   <Button
                     type="submit"
+                    disabled={isSubmitting}
                     className="w-auto bg-neutral-900 dark:bg-white dark:text-neutral-900 text-white font-semibold rounded-md px-8"
                     data-testid="button-submit-request"
                   >
-                    Submit Request
+                    {isSubmitting ? "Submitting..." : "Submit Request"}
                   </Button>
                 </form>
               </motion.div>

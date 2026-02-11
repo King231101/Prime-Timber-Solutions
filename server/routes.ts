@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { loginSchema, phoneLoginSchema, verifyCodeSchema, registerUserSchema } from "@shared/schema";
+import { loginSchema, phoneLoginSchema, verifyCodeSchema, registerUserSchema, insertContactRequestSchema } from "@shared/schema";
 import bcrypt from "bcryptjs";
 import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
 
@@ -89,6 +89,32 @@ export async function registerRoutes(
       return res.json(usersWithCompanies);
     } catch (error) {
       console.error("Error fetching users:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const parsed = insertContactRequestSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid form data" });
+      }
+      const request = await storage.createContactRequest(parsed.data);
+      return res.json({ success: true, request });
+    } catch (error) {
+      console.error("Contact request error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/admin/contact-requests", async (req, res) => {
+    if (!(req.session as any)?.adminId) {
+      return res.status(401).json({ message: "Not authenticated" });
+    }
+    try {
+      const requests = await storage.getAllContactRequests();
+      return res.json(requests);
+    } catch (error) {
       return res.status(500).json({ message: "Internal server error" });
     }
   });

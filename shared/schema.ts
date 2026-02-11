@@ -81,6 +81,24 @@ export const insertTeamMemberSchema = createInsertSchema(teamMembers).omit({
 export type InsertTeamMember = z.infer<typeof insertTeamMemberSchema>;
 export type TeamMember = typeof teamMembers.$inferSelect;
 
+export const contactRequests = pgTable("contact_requests", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  role: varchar("role", { length: 100 }),
+  name: varchar("name", { length: 255 }).notNull(),
+  email: varchar("email", { length: 255 }).notNull(),
+  phone: varchar("phone", { length: 20 }),
+  company: varchar("company", { length: 255 }),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertContactRequestSchema = createInsertSchema(contactRequests).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertContactRequest = z.infer<typeof insertContactRequestSchema>;
+export type ContactRequest = typeof contactRequests.$inferSelect;
+
 export const phoneLoginSchema = z.object({
   phone: z.string().min(10, "Phone number is required"),
 });

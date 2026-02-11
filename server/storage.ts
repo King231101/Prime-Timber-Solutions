@@ -3,6 +3,7 @@ import {
   appUsers, type AppUser, type InsertAppUser,
   companies, type Company, type InsertCompany,
   teamMembers, type TeamMember, type InsertTeamMember,
+  contactRequests, type ContactRequest, type InsertContactRequest,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
@@ -26,6 +27,9 @@ export interface IStorage {
   getTeamMembersByCompanyId(companyId: string): Promise<TeamMember[]>;
   createTeamMember(member: InsertTeamMember): Promise<TeamMember>;
   deleteTeamMember(id: string): Promise<void>;
+
+  createContactRequest(request: InsertContactRequest): Promise<ContactRequest>;
+  getAllContactRequests(): Promise<ContactRequest[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -97,6 +101,15 @@ export class DatabaseStorage implements IStorage {
 
   async deleteTeamMember(id: string): Promise<void> {
     await db.delete(teamMembers).where(eq(teamMembers.id, id));
+  }
+
+  async createContactRequest(request: InsertContactRequest): Promise<ContactRequest> {
+    const [created] = await db.insert(contactRequests).values(request).returning();
+    return created;
+  }
+
+  async getAllContactRequests(): Promise<ContactRequest[]> {
+    return db.select().from(contactRequests);
   }
 }
 

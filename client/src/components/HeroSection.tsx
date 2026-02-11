@@ -36,17 +36,19 @@ export default function HeroSection() {
               Real-time visibility, audit-ready compliance, and control across every load, from stump to mill.
             </p>
             <div className="flex flex-col sm:flex-row items-start gap-4">
-              <Link href="/#how-it-works">
-                <Button
-                  variant="default"
-                  size="lg"
-                  className="bg-orange-600 border-orange-600 text-white font-semibold text-base px-8"
-                  data-testid="button-see-how"
-                >
-                  See How It Works
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Button>
-              </Link>
+              <Button
+                variant="default"
+                size="lg"
+                className="bg-orange-600 border-orange-600 text-white font-semibold text-base px-8"
+                data-testid="button-see-how"
+                onClick={() => {
+                  const el = document.getElementById("how-it-works");
+                  if (el) el.scrollIntoView({ behavior: "smooth" });
+                }}
+              >
+                See How It Works
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
               <Link href="/contact">
                 <Button
                   variant="outline"

@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Phone } from "lucide-react";
+import { Phone, Mail } from "lucide-react";
 import { SiFacebook, SiInstagram } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -34,10 +34,16 @@ export default function Footer() {
             <p className="text-sm text-neutral-400 leading-relaxed mb-4">
               The Forestry Platform that Benefits the Entire Supply Chain.
             </p>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-2">
               <Phone className="w-4 h-4 text-orange-500" />
               <a href="tel:+14078135384" className="text-sm text-neutral-400 hover:text-orange-400 transition-colors" data-testid="footer-phone">
-                Support: (407) 813-5384
+                (407) 813-5384
+              </a>
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <Mail className="w-4 h-4 text-orange-500" />
+              <a href="mailto:support@primecuttimber.com" className="text-sm text-neutral-400 hover:text-orange-400 transition-colors" data-testid="footer-email">
+                support@primecuttimber.com
               </a>
             </div>
             <div className="flex items-center gap-3">
