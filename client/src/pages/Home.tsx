@@ -11,6 +11,8 @@ import PricingValueSection from "@/components/PricingValueSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CaseStudiesSection from "@/components/CaseStudiesSection";
 import FAQSection from "@/components/FAQSection";
+import ImageCarouselSection from "@/components/ImageCarouselSection";
+import AwardsSection from "@/components/AwardsSection";
 import BlogPreviewSection from "@/components/BlogPreviewSection";
 
 export default function Home() {
@@ -28,7 +30,9 @@ export default function Home() {
         <PricingValueSection />
         <TestimonialsSection />
         <CaseStudiesSection />
+        <ImageCarouselSection />
         <FAQSection />
+        <AwardsSection />
         <BlogPreviewSection />
       </main>
       <Footer />

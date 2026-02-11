@@ -199,13 +199,22 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           <Link href="/">
-            <div className="flex items-center gap-2 cursor-pointer" data-testid="logo">
-              <span className="text-2xl font-extrabold tracking-tight text-orange-600" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                PRIME CUT TIMBER
-              </span>
-              <span className="text-[10px] font-bold tracking-widest text-orange-500/70 bg-orange-50 dark:bg-orange-900/20 px-1.5 py-0.5 rounded-md border border-orange-200 dark:border-orange-800/40">
-                PCT
-              </span>
+            <div className="flex items-center gap-2.5 cursor-pointer" data-testid="logo">
+              <div className="w-8 h-8 bg-orange-600 rounded-md flex items-center justify-center flex-shrink-0">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3L4 9v12h16V9l-8-6z" />
+                  <path d="M12 3v6" />
+                  <path d="M8 21V13h8v8" />
+                </svg>
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-[15px] font-extrabold tracking-tight text-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                  PRIME CUT
+                </span>
+                <span className="text-[10px] font-bold tracking-[0.2em] text-orange-600" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                  TIMBER
+                </span>
+              </div>
             </div>
           </Link>
 

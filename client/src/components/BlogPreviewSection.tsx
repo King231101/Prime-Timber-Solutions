@@ -22,6 +22,24 @@ const posts = [
     date: "Nov 15, 2025",
     image: "/images/timber-mill.png",
   },
+  {
+    title: "Embracing Digital Tools: A Field Guide for Forestry Professionals",
+    category: "Technology",
+    date: "Oct 22, 2025",
+    image: "/images/blog-digital.jpg",
+  },
+  {
+    title: "Optimizing Timber Logistics: From Forest to Mill in Record Time",
+    category: "Logistics",
+    date: "Oct 5, 2025",
+    image: "/images/blog-logistics.jpg",
+  },
+  {
+    title: "Sustainable Forestry Practices and the Role of Digital Accountability",
+    category: "Sustainability",
+    date: "Sep 18, 2025",
+    image: "/images/blog-sustainability.jpg",
+  },
 ];
 
 export default function BlogPreviewSection() {
@@ -55,13 +73,13 @@ export default function BlogPreviewSection() {
           </Link>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post, i) => (
             <motion.div
               key={post.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               viewport={{ once: true }}
             >
               <Card className="overflow-visible group cursor-pointer h-full hover-elevate" data-testid={`card-blog-${i}`}>

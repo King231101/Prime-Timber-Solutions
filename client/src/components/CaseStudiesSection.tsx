@@ -21,6 +21,24 @@ const caseStudies = [
     description: "Sanville Logging adopted PCT to replace lost paper tickets and streamline multi-crew operations with real-time, offline-capable digital tools that improved accuracy, transparency, and efficiency in the woods.",
     image: "/images/stacked-logs.png",
   },
+  {
+    category: "Sawmill / Processing",
+    company: "Northern Pine Mills",
+    description: "Northern Pine Mills integrated PCT across all receiving operations, cutting check-in times by 60% and enabling real-time volume tracking that eliminated end-of-month reconciliation disputes.",
+    image: "/images/case-sawmill.jpg",
+  },
+  {
+    category: "Sustainability / Certification",
+    company: "GreenLeaf Forest Partners",
+    description: "GreenLeaf leveraged PCT's chain-of-custody tracking to achieve and maintain FSC and PEFC certifications, with automated audit trails that reduced compliance preparation time from weeks to days.",
+    image: "/images/case-sustainability.jpg",
+  },
+  {
+    category: "Mill / Receiving",
+    company: "Atlantic Hardwood Co.",
+    description: "Atlantic Hardwood streamlined their receiving yard operations with PCT's digital scale ticket integration, reducing manual data entry errors by 95% and accelerating supplier payments by 2 weeks.",
+    image: "/images/case-mill.jpg",
+  },
 ];
 
 export default function CaseStudiesSection() {
@@ -46,13 +64,13 @@ export default function CaseStudiesSection() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {caseStudies.map((cs, i) => (
             <motion.div
               key={cs.company}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.15 }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
               viewport={{ once: true }}
             >
               <Card className="overflow-visible group cursor-pointer h-full hover-elevate" data-testid={`card-case-study-${i}`}>

@@ -23,13 +23,22 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <span className="text-xl font-extrabold text-orange-500" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-                PRIME CUT TIMBER
-              </span>
-              <span className="text-[9px] font-bold tracking-widest text-orange-400/70 bg-orange-900/30 px-1 py-0.5 rounded-md">
-                PCT
-              </span>
+            <div className="flex items-center gap-2.5 mb-4">
+              <div className="w-7 h-7 bg-orange-600 rounded-md flex items-center justify-center flex-shrink-0">
+                <svg viewBox="0 0 24 24" className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 3L4 9v12h16V9l-8-6z" />
+                  <path d="M12 3v6" />
+                  <path d="M8 21V13h8v8" />
+                </svg>
+              </div>
+              <div className="flex flex-col leading-none">
+                <span className="text-sm font-extrabold tracking-tight text-white" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                  PRIME CUT
+                </span>
+                <span className="text-[9px] font-bold tracking-[0.2em] text-orange-500" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                  TIMBER
+                </span>
+              </div>
             </div>
             <p className="text-sm text-neutral-400 leading-relaxed mb-4">
               The Forestry Platform that Benefits the Entire Supply Chain.

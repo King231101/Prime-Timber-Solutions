@@ -3,7 +3,7 @@ import { useLocation, Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { LogOut, LayoutDashboard, Users, FileText, Settings, BarChart3 } from "lucide-react";
+import { LogOut, LayoutDashboard, Users, FileText, Settings, BarChart3, MessageSquare } from "lucide-react";
 import { apiRequest } from "@/lib/queryClient";
 
 interface UserWithCompanies {
@@ -22,12 +22,24 @@ interface UserWithCompanies {
   }[];
 }
 
+interface ContactRequestItem {
+  id: string;
+  role: string | null;
+  name: string;
+  email: string;
+  phone: string | null;
+  company: string | null;
+  createdAt: string | null;
+}
+
 export default function Admin() {
   const [, setLocation] = useLocation();
   const [isAuthed, setIsAuthed] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [registeredUsers, setRegisteredUsers] = useState<UserWithCompanies[]>([]);
+  const [contactRequests, setContactRequests] = useState<ContactRequestItem[]>([]);
   const [usersLoading, setUsersLoading] = useState(false);
+  const [activeTab, setActiveTab] = useState<"users" | "contacts">("users");
   const { toast } = useToast();
 
   useEffect(() => {
@@ -40,6 +52,7 @@ export default function Admin() {
       if (res.ok) {
         setIsAuthed(true);
         loadUsers();
+        loadContactRequests();
       } else {
         setLocation("/login");
       }
@@ -59,9 +72,19 @@ export default function Admin() {
         setRegisteredUsers(data);
       }
     } catch {
-      // silently fail
     } finally {
       setUsersLoading(false);
+    }
+  };
+
+  const loadContactRequests = async () => {
+    try {
+      const res = await fetch("/api/admin/contact-requests", { credentials: "include" });
+      if (res.ok) {
+        const data = await res.json();
+        setContactRequests(data);
+      }
+    } catch {
     }
   };
 
@@ -91,7 +114,7 @@ export default function Admin() {
     { label: "Active Harvest Areas", value: "847", icon: BarChart3 },
     { label: "Digital Tickets Today", value: "2,341", icon: FileText },
     { label: "Registered Users", value: String(registeredCount), icon: Users },
-    { label: "Uptime", value: "99.9%", icon: Settings },
+    { label: "Contact Requests", value: String(contactRequests.length), icon: MessageSquare },
   ];
 
   return (
@@ -145,88 +168,165 @@ export default function Admin() {
           ))}
         </div>
 
-        <Card className="p-6 mb-8" data-testid="card-registered-users">
-          <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
-            <h3 className="text-base font-bold text-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
-              Registered Users
-            </h3>
-            <Button variant="outline" onClick={loadUsers} disabled={usersLoading} data-testid="button-refresh-users">
-              {usersLoading ? "Loading..." : "Refresh"}
-            </Button>
-          </div>
+        <div className="flex gap-2 mb-6">
+          <Button
+            variant={activeTab === "users" ? "default" : "outline"}
+            onClick={() => setActiveTab("users")}
+            data-testid="tab-users"
+          >
+            <Users className="w-4 h-4 mr-2" />
+            Users ({registeredCount})
+          </Button>
+          <Button
+            variant={activeTab === "contacts" ? "default" : "outline"}
+            onClick={() => setActiveTab("contacts")}
+            data-testid="tab-contacts"
+          >
+            <MessageSquare className="w-4 h-4 mr-2" />
+            Contact Requests ({contactRequests.length})
+          </Button>
+        </div>
 
-          {registeredUsers.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-4 text-center" data-testid="text-no-users">
-              No registered users yet.
-            </p>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm" data-testid="table-users">
-                <thead>
-                  <tr className="border-b border-neutral-200 dark:border-neutral-700">
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Name</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Phone</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">DOB</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Registered</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Companies</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Roles</th>
-                    <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Joined</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {registeredUsers.map((user) => (
-                    <tr
-                      key={user.id}
-                      className="border-b border-neutral-100 dark:border-neutral-800 last:border-0"
-                      data-testid={`user-row-${user.id}`}
-                    >
-                      <td className="py-3 px-2 font-medium text-foreground">
-                        {user.firstName && user.lastName
-                          ? `${user.firstName} ${user.lastName}`
-                          : "—"}
-                      </td>
-                      <td className="py-3 px-2 text-muted-foreground">{user.phone}</td>
-                      <td className="py-3 px-2 text-muted-foreground">{user.dateOfBirth || "—"}</td>
-                      <td className="py-3 px-2">
-                        <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${
-                          user.isRegistered
-                            ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
-                            : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
-                        }`}>
-                          {user.isRegistered ? "Yes" : "No"}
-                        </span>
-                      </td>
-                      <td className="py-3 px-2 text-muted-foreground">
-                        {user.companies.length > 0
-                          ? user.companies.map(c => c.name).join(", ")
-                          : "—"}
-                      </td>
-                      <td className="py-3 px-2 text-muted-foreground">
-                        {user.companies.length > 0
-                          ? user.companies.flatMap(c => c.roles || []).join(", ") || "—"
-                          : "—"}
-                      </td>
-                      <td className="py-3 px-2 text-muted-foreground text-xs">
-                        {user.createdAt
-                          ? new Date(user.createdAt).toLocaleDateString()
-                          : "—"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        {activeTab === "users" && (
+          <Card className="p-6 mb-8" data-testid="card-registered-users">
+            <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
+              <h3 className="text-base font-bold text-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                Registered Users
+              </h3>
+              <Button variant="outline" onClick={loadUsers} disabled={usersLoading} data-testid="button-refresh-users">
+                {usersLoading ? "Loading..." : "Refresh"}
+              </Button>
             </div>
-          )}
-        </Card>
+
+            {registeredUsers.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-4 text-center" data-testid="text-no-users">
+                No registered users yet.
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm" data-testid="table-users">
+                  <thead>
+                    <tr className="border-b border-neutral-200 dark:border-neutral-700">
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Name</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Phone</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">DOB</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Registered</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Companies</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Roles</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Joined</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {registeredUsers.map((user) => (
+                      <tr
+                        key={user.id}
+                        className="border-b border-neutral-100 dark:border-neutral-800 last:border-0"
+                        data-testid={`user-row-${user.id}`}
+                      >
+                        <td className="py-3 px-2 font-medium text-foreground">
+                          {user.firstName && user.lastName
+                            ? `${user.firstName} ${user.lastName}`
+                            : "\u2014"}
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground">{user.phone}</td>
+                        <td className="py-3 px-2 text-muted-foreground">{user.dateOfBirth || "\u2014"}</td>
+                        <td className="py-3 px-2">
+                          <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${
+                            user.isRegistered
+                              ? "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400"
+                              : "bg-neutral-100 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400"
+                          }`}>
+                            {user.isRegistered ? "Yes" : "No"}
+                          </span>
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground">
+                          {user.companies.length > 0
+                            ? user.companies.map(c => c.name).join(", ")
+                            : "\u2014"}
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground">
+                          {user.companies.length > 0
+                            ? user.companies.flatMap(c => c.roles || []).join(", ") || "\u2014"
+                            : "\u2014"}
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground text-xs">
+                          {user.createdAt
+                            ? new Date(user.createdAt).toLocaleDateString()
+                            : "\u2014"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </Card>
+        )}
+
+        {activeTab === "contacts" && (
+          <Card className="p-6 mb-8" data-testid="card-contact-requests">
+            <div className="flex items-center justify-between gap-4 mb-4 flex-wrap">
+              <h3 className="text-base font-bold text-foreground" style={{ fontFamily: "'Montserrat', sans-serif" }}>
+                Contact Form Submissions
+              </h3>
+              <Button variant="outline" onClick={loadContactRequests} data-testid="button-refresh-contacts">
+                Refresh
+              </Button>
+            </div>
+
+            {contactRequests.length === 0 ? (
+              <p className="text-sm text-muted-foreground py-4 text-center" data-testid="text-no-contacts">
+                No contact requests yet.
+              </p>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm" data-testid="table-contacts">
+                  <thead>
+                    <tr className="border-b border-neutral-200 dark:border-neutral-700">
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Name</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Email</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Phone</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Company</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Role</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {contactRequests.map((req) => (
+                      <tr
+                        key={req.id}
+                        className="border-b border-neutral-100 dark:border-neutral-800 last:border-0"
+                        data-testid={`contact-row-${req.id}`}
+                      >
+                        <td className="py-3 px-2 font-medium text-foreground">{req.name}</td>
+                        <td className="py-3 px-2 text-muted-foreground">
+                          <a href={`mailto:${req.email}`} className="text-orange-500 hover:underline">{req.email}</a>
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground">{req.phone || "\u2014"}</td>
+                        <td className="py-3 px-2 text-muted-foreground">{req.company || "\u2014"}</td>
+                        <td className="py-3 px-2 text-muted-foreground">{req.role || "\u2014"}</td>
+                        <td className="py-3 px-2 text-muted-foreground text-xs">
+                          {req.createdAt
+                            ? new Date(req.createdAt).toLocaleDateString()
+                            : "\u2014"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </Card>
+        )}
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <Card className="p-6" data-testid="card-recent-activity">
             <h3 className="text-base font-bold text-foreground mb-4">Recent Activity</h3>
             <div className="space-y-3">
               {[
-                { text: "New harvest area created — Sector 14B", time: "2 min ago" },
+                { text: "New harvest area created \u2014 Sector 14B", time: "2 min ago" },
                 { text: "Load #4521 delivered to Northern Pine Mill", time: "15 min ago" },
-                { text: "Scale ticket verified — Load #4518", time: "32 min ago" },
+                { text: "Scale ticket verified \u2014 Load #4518", time: "32 min ago" },
                 { text: "Rowlee Farms Trucking joined harvest #892", time: "1 hr ago" },
                 { text: "Compliance report generated for FSC audit", time: "2 hrs ago" },
               ].map((item, i) => (
