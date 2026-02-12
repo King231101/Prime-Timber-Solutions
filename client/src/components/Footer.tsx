@@ -49,10 +49,16 @@ export default function Footer() {
                 (407) 813-5384
               </a>
             </div>
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center gap-2 mb-2">
               <Mail className="w-4 h-4 text-orange-500" />
               <a href="mailto:support@primecuttimber.com" className="text-sm text-neutral-400 hover:text-orange-400 transition-colors" data-testid="footer-email">
                 support@primecuttimber.com
+              </a>
+            </div>
+            <div className="flex items-center gap-2 mb-4">
+              <Mail className="w-4 h-4 text-orange-500" />
+              <a href="mailto:sales@primecuttimber.com" className="text-sm text-neutral-400 hover:text-orange-400 transition-colors" data-testid="footer-email-sales">
+                sales@primecuttimber.com
               </a>
             </div>
             <div className="flex items-center gap-3">
