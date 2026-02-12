@@ -266,7 +266,7 @@ export default function Header() {
               <Phone className="w-4 h-4 text-orange-500" />
               (407) 813-5384
             </a>
-            <Link href="/contact">
+            <Link href="/talk-to-expert">
               <Button variant="default" className="bg-orange-600 border-orange-600 text-white font-semibold rounded-md" data-testid="button-talk-expert">
                 Talk To An Expert
               </Button>
@@ -309,7 +309,7 @@ export default function Header() {
                 <Phone className="w-4 h-4 text-orange-500" />
                 (407) 813-5384
               </a>
-              <Link href="/contact">
+              <Link href="/talk-to-expert">
                 <Button variant="default" className="w-full bg-orange-600 border-orange-600 text-white font-semibold" data-testid="mobile-button-expert">
                   Talk To An Expert
                 </Button>

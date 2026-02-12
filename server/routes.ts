@@ -31,6 +31,7 @@ export async function registerRoutes(
     const pages = [
       { url: "/", priority: "1.0", changefreq: "weekly" },
       { url: "/contact", priority: "0.8", changefreq: "monthly" },
+      { url: "/talk-to-expert", priority: "0.8", changefreq: "monthly" },
       { url: "/pricing", priority: "0.8", changefreq: "monthly" },
       { url: "/solutions/digital-trip-tickets", priority: "0.7", changefreq: "monthly" },
       { url: "/solutions/harvest-management", priority: "0.7", changefreq: "monthly" },

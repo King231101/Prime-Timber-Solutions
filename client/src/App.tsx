@@ -8,6 +8,7 @@ import Home from "@/pages/Home";
 import Login from "@/pages/Login";
 import Admin from "@/pages/Admin";
 import Contact from "@/pages/Contact";
+import TalkToExpert from "@/pages/TalkToExpert";
 import Pricing from "@/pages/Pricing";
 import GenericPage from "@/pages/GenericPage";
 import UserLogin from "@/pages/UserLogin";
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/login" component={Login} />
       <Route path="/admin" component={Admin} />
       <Route path="/contact" component={Contact} />
+      <Route path="/talk-to-expert" component={TalkToExpert} />
       <Route path="/pricing" component={Pricing} />
       <Route path="/app-login" component={UserLogin} />
       <Route path="/dashboard" component={UserDashboard} />
