@@ -88,6 +88,7 @@ export const contactRequests = pgTable("contact_requests", {
   email: varchar("email", { length: 255 }).notNull(),
   phone: varchar("phone", { length: 20 }),
   company: varchar("company", { length: 255 }),
+  message: text("message"),
   createdAt: timestamp("created_at").defaultNow(),
 });
 

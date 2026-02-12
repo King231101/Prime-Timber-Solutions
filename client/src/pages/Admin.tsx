@@ -29,6 +29,7 @@ interface ContactRequestItem {
   email: string;
   phone: string | null;
   company: string | null;
+  message: string | null;
   createdAt: string | null;
 }
 
@@ -288,6 +289,7 @@ export default function Admin() {
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Phone</th>
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Company</th>
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Role</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Message</th>
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Date</th>
                     </tr>
                   </thead>
@@ -305,6 +307,7 @@ export default function Admin() {
                         <td className="py-3 px-2 text-muted-foreground">{req.phone || "\u2014"}</td>
                         <td className="py-3 px-2 text-muted-foreground">{req.company || "\u2014"}</td>
                         <td className="py-3 px-2 text-muted-foreground">{req.role || "\u2014"}</td>
+                        <td className="py-3 px-2 text-muted-foreground text-xs max-w-[200px] truncate">{req.message || "\u2014"}</td>
                         <td className="py-3 px-2 text-muted-foreground text-xs">
                           {req.createdAt
                             ? new Date(req.createdAt).toLocaleDateString()
