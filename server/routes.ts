@@ -82,7 +82,7 @@ ${pages.map(p => `  <url>
       }
 
       const { email, password } = parsed.data;
-      const admin = await storage.getAdminByEmail(email);
+      const admin = await storage.getAdminByEmail(email.toLowerCase());
 
       if (!admin) {
         return res.status(401).json({ message: "Invalid email or password" });
