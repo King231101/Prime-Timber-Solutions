@@ -85,7 +85,7 @@ function SolutionsMegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () =
       data-testid="solutions-mega-menu"
     >
       <div className="bg-neutral-900 dark:bg-neutral-800 px-6 py-4 flex items-center justify-between gap-4 flex-wrap">
-        <div className="flex items-center gap-3">
+        <div className="flex flex-col">
           <span className="text-lg font-extrabold text-orange-500" style={{ fontFamily: "'Montserrat', sans-serif" }}>
             PRIME CUT TIMBER
           </span>

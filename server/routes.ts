@@ -26,6 +26,53 @@ export async function registerRoutes(
   await setupAuth(app);
   registerAuthRoutes(app);
 
+  app.get("/sitemap.xml", (_req, res) => {
+    const baseUrl = "https://primecuttimber.com";
+    const pages = [
+      { url: "/", priority: "1.0", changefreq: "weekly" },
+      { url: "/contact", priority: "0.8", changefreq: "monthly" },
+      { url: "/pricing", priority: "0.8", changefreq: "monthly" },
+      { url: "/solutions/digital-trip-tickets", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/harvest-management", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/communications", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/scale-ticket-ocr", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/settlements", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/integrations", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/invoicing", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/reporting", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/ai-scale-verification", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/quota-control", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/analytics", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/chain-of-custody", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/fiber-security", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/auditing", priority: "0.7", changefreq: "monthly" },
+      { url: "/solutions/eudr-data-export", priority: "0.7", changefreq: "monthly" },
+      { url: "/who-we-serve/land-owners", priority: "0.6", changefreq: "monthly" },
+      { url: "/who-we-serve/land-managers", priority: "0.6", changefreq: "monthly" },
+      { url: "/who-we-serve/loggers", priority: "0.6", changefreq: "monthly" },
+      { url: "/who-we-serve/truckers", priority: "0.6", changefreq: "monthly" },
+      { url: "/who-we-serve/mills", priority: "0.6", changefreq: "monthly" },
+      { url: "/who-we-serve/certification-managers", priority: "0.6", changefreq: "monthly" },
+      { url: "/resources/platform", priority: "0.6", changefreq: "monthly" },
+      { url: "/resources/case-studies", priority: "0.6", changefreq: "monthly" },
+      { url: "/resources/integrations", priority: "0.6", changefreq: "monthly" },
+      { url: "/resources/about-us", priority: "0.6", changefreq: "monthly" },
+      { url: "/resources/faq", priority: "0.6", changefreq: "monthly" },
+    ];
+
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${pages.map(p => `  <url>
+    <loc>${baseUrl}${p.url}</loc>
+    <changefreq>${p.changefreq}</changefreq>
+    <priority>${p.priority}</priority>
+  </url>`).join("\n")}
+</urlset>`;
+
+    res.header("Content-Type", "application/xml");
+    res.send(xml);
+  });
+
   app.post("/api/admin/login", async (req, res) => {
     try {
       const parsed = loginSchema.safeParse(req.body);
