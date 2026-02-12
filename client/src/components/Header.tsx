@@ -80,8 +80,8 @@ function SolutionsMegaMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   return (
     <div
       ref={ref}
-      className="absolute top-full left-1/2 -translate-x-1/2 mt-2 bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-700 shadow-xl z-50 overflow-hidden"
-      style={{ width: "min(56rem, 90vw)" }}
+      className="fixed top-[4.5rem] bg-white dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-700 shadow-xl z-50 overflow-hidden"
+      style={{ width: "min(56rem, calc(100vw - 2rem))", left: "50%", transform: "translateX(-50%)" }}
       data-testid="solutions-mega-menu"
     >
       <div className="bg-neutral-900 dark:bg-neutral-800 px-6 py-4 flex items-center justify-between gap-4 flex-wrap">

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link, useRoute } from "wouter";
 import { motion } from "framer-motion";
-import { ArrowRight, MapPin, Trees, Truck, Factory, FileText, Eye, ShieldCheck, ScanLine, Package, BookOpen, Newspaper, Puzzle, HelpCircle } from "lucide-react";
+import { ArrowRight, MapPin, Trees, Truck, Factory, FileText, Eye, ShieldCheck, ScanLine, Package, BookOpen, Newspaper, Puzzle, HelpCircle, MessageSquare, BarChart3, DollarSign, Globe, Lock, ClipboardCheck, Receipt, Radio, Users, Award } from "lucide-react";
 
 const pageData: Record<string, { title: string; subtitle: string; description: string; image: string; features: { icon: any; title: string; desc: string }[] }> = {
   "digital-trip-tickets": {
@@ -150,6 +150,193 @@ const pageData: Record<string, { title: string; subtitle: string; description: s
       { icon: Truck, title: "Field Use", desc: "How PCT works in the cab, on the landing, and at the mill." },
     ],
   },
+  "harvest-management": {
+    title: "Harvest Management",
+    subtitle: "Solutions",
+    description: "Plan, execute, and monitor harvest operations from a single platform. Coordinate loggers, truckers, and mills with real-time data and digital workflows.",
+    image: "/images/forest-bg.png",
+    features: [
+      { icon: Trees, title: "Harvest Planning", desc: "Create detailed harvest plans with maps, boundaries, and production targets." },
+      { icon: Eye, title: "Live Monitoring", desc: "Track harvest progress in real time across all active sites." },
+      { icon: Users, title: "Team Coordination", desc: "Assign crews, manage schedules, and communicate changes instantly." },
+    ],
+  },
+  "communications": {
+    title: "Communications",
+    subtitle: "Solutions",
+    description: "Keep everyone in the loop with built-in messaging, notifications, and alerts. No more missed calls or lost messages between the field and the office.",
+    image: "/images/app-devices.png",
+    features: [
+      { icon: MessageSquare, title: "In-App Messaging", desc: "Send messages directly to crews, drivers, and mill contacts." },
+      { icon: Radio, title: "Real-Time Alerts", desc: "Push notifications for load status changes, destination updates, and more." },
+      { icon: Users, title: "Team Channels", desc: "Organize conversations by harvest area, company, or project." },
+    ],
+  },
+  "settlements": {
+    title: "Settlements",
+    subtitle: "Solutions",
+    description: "Automate payment calculations based on verified load data. Eliminate disputes, reduce errors, and pay your teams faster with transparent settlements.",
+    image: "/images/timber-mill.png",
+    features: [
+      { icon: DollarSign, title: "Auto Calculations", desc: "Settlement amounts calculated automatically from verified load data." },
+      { icon: FileText, title: "Transparent Records", desc: "Every payment is backed by traceable, auditable load records." },
+      { icon: ClipboardCheck, title: "Dispute Resolution", desc: "Quickly resolve discrepancies with complete load history and timestamps." },
+    ],
+  },
+  "invoicing": {
+    title: "Invoicing",
+    subtitle: "Solutions",
+    description: "Generate professional invoices directly from your load data. Streamline billing with automated calculations and digital delivery to your customers.",
+    image: "/images/app-devices.png",
+    features: [
+      { icon: Receipt, title: "Auto-Generated Invoices", desc: "Create invoices instantly from verified load and settlement data." },
+      { icon: DollarSign, title: "Flexible Billing", desc: "Bill by load, by ton, by species, or custom rate structures." },
+      { icon: FileText, title: "Digital Delivery", desc: "Send invoices electronically and track payment status in real time." },
+    ],
+  },
+  "reporting": {
+    title: "Reporting",
+    subtitle: "Solutions",
+    description: "Generate comprehensive reports on production, deliveries, compliance, and financials. Get the insights you need to make better decisions.",
+    image: "/images/timber-truck.png",
+    features: [
+      { icon: BarChart3, title: "Custom Reports", desc: "Build reports tailored to your specific operational needs." },
+      { icon: FileText, title: "Scheduled Exports", desc: "Automate report generation and delivery on your schedule." },
+      { icon: Eye, title: "Visual Dashboards", desc: "See trends, patterns, and KPIs at a glance with interactive charts." },
+    ],
+  },
+  "ai-scale-verification": {
+    title: "AI Scale Verification",
+    subtitle: "Solutions",
+    description: "Use AI-powered tools to automatically verify scale ticket data against load records. Catch errors before they become costly disputes.",
+    image: "/images/stacked-logs.png",
+    features: [
+      { icon: ScanLine, title: "Smart Matching", desc: "AI automatically matches scale data to the correct load tickets." },
+      { icon: ShieldCheck, title: "Error Detection", desc: "Flag discrepancies between expected and actual weights instantly." },
+      { icon: Eye, title: "Confidence Scoring", desc: "See verification confidence levels for every matched record." },
+    ],
+  },
+  "quota-control": {
+    title: "Quota Control",
+    subtitle: "Solutions",
+    description: "Set and enforce volume quotas by species, destination, or time period. Prevent over-delivery and maintain balanced wood flow across your operations.",
+    image: "/images/field-worker.png",
+    features: [
+      { icon: Package, title: "Volume Limits", desc: "Set quotas by species, grade, destination, or any custom criteria." },
+      { icon: Eye, title: "Real-Time Tracking", desc: "Monitor quota consumption in real time as loads are delivered." },
+      { icon: ShieldCheck, title: "Auto-Enforcement", desc: "Automatically prevent over-delivery with built-in quota checks." },
+    ],
+  },
+  "analytics": {
+    title: "Analytics",
+    subtitle: "Solutions",
+    description: "Turn your operational data into actionable insights. Analyze trends, optimize routes, and improve efficiency across your entire supply chain.",
+    image: "/images/timber-mill.png",
+    features: [
+      { icon: BarChart3, title: "Trend Analysis", desc: "Identify production trends and seasonal patterns in your data." },
+      { icon: Truck, title: "Route Optimization", desc: "Analyze delivery routes to reduce costs and improve efficiency." },
+      { icon: Eye, title: "Performance Metrics", desc: "Track KPIs for crews, drivers, and operations over time." },
+    ],
+  },
+  "chain-of-custody": {
+    title: "Chain of Custody Reporting",
+    subtitle: "Solutions",
+    description: "Maintain full chain of custody documentation from stump to mill. Meet FSC, SFI, and PEFC certification requirements with automated tracking.",
+    image: "/images/forest-bg.png",
+    features: [
+      { icon: ShieldCheck, title: "Full Traceability", desc: "Track every load from origin to destination with complete documentation." },
+      { icon: FileText, title: "Certification Reports", desc: "Generate FSC, SFI, and PEFC compliant reports in minutes." },
+      { icon: Lock, title: "Tamper-Proof Records", desc: "Immutable digital records ensure data integrity for auditors." },
+    ],
+  },
+  "fiber-security": {
+    title: "Fiber Security",
+    subtitle: "Solutions",
+    description: "Protect your fiber supply with advanced verification and tracking. Ensure every load comes from verified, legal sources with complete documentation.",
+    image: "/images/stacked-logs.png",
+    features: [
+      { icon: Lock, title: "Source Verification", desc: "Verify the origin of every load with GPS and documentation checks." },
+      { icon: ShieldCheck, title: "Risk Assessment", desc: "Automated risk scoring for supply chain partners and sources." },
+      { icon: Globe, title: "Regulatory Compliance", desc: "Meet international fiber security standards and regulations." },
+    ],
+  },
+  "auditing": {
+    title: "Auditing",
+    subtitle: "Solutions",
+    description: "Be audit-ready at all times with complete, organized digital records. Simplify the audit process with one-click report generation and full traceability.",
+    image: "/images/timber-truck.png",
+    features: [
+      { icon: ClipboardCheck, title: "Audit-Ready Data", desc: "All records are organized, timestamped, and instantly accessible." },
+      { icon: FileText, title: "One-Click Reports", desc: "Generate comprehensive audit reports with a single click." },
+      { icon: Eye, title: "Complete History", desc: "Full audit trail for every transaction, change, and event." },
+    ],
+  },
+  "eudr-data-export": {
+    title: "EUDR Data Export",
+    subtitle: "Solutions",
+    description: "Export your data in formats compliant with the EU Deforestation Regulation. Ensure your timber products meet EUDR requirements for the European market.",
+    image: "/images/app-devices.png",
+    features: [
+      { icon: Globe, title: "EUDR Compliance", desc: "Export data in EUDR-compliant formats for EU market access." },
+      { icon: MapPin, title: "Geolocation Data", desc: "Include precise GPS coordinates for harvest origin verification." },
+      { icon: ShieldCheck, title: "Due Diligence", desc: "Automated due diligence documentation for regulatory submissions." },
+    ],
+  },
+  "land-owners": {
+    title: "Land Owners",
+    subtitle: "Who We Serve",
+    description: "Stay informed about what's happening on your land. Get real-time visibility into harvest operations, load volumes, and compliance status without being on-site.",
+    image: "/images/forest-bg.png",
+    features: [
+      { icon: Eye, title: "Remote Visibility", desc: "Monitor harvest operations on your land from anywhere." },
+      { icon: BarChart3, title: "Volume Reports", desc: "See exactly how much timber is being harvested and delivered." },
+      { icon: ShieldCheck, title: "Compliance Assurance", desc: "Verify that operations meet your environmental and contractual standards." },
+    ],
+  },
+  "certification-managers": {
+    title: "Certification Managers",
+    subtitle: "Who We Serve",
+    description: "Streamline certification management with automated chain of custody tracking, audit-ready reports, and real-time compliance monitoring across all operations.",
+    image: "/images/timber-mill.png",
+    features: [
+      { icon: Award, title: "Multi-Standard Support", desc: "Manage FSC, SFI, PEFC, and other certifications in one place." },
+      { icon: ClipboardCheck, title: "Audit Preparation", desc: "Generate audit-ready documentation with a single click." },
+      { icon: Eye, title: "Compliance Dashboard", desc: "Monitor certification compliance status across all operations in real time." },
+    ],
+  },
+  "platform": {
+    title: "The PCT Platform",
+    subtitle: "Resources",
+    description: "Discover how Prime Cut Timber's all-in-one digital platform is transforming forestry operations. From load tickets to settlements, everything in one place.",
+    image: "/images/app-devices.png",
+    features: [
+      { icon: Package, title: "All-In-One Solution", desc: "Digital tickets, tracking, settlements, and compliance in one platform." },
+      { icon: Truck, title: "Offline-First", desc: "Works without internet in the field and syncs automatically when connected." },
+      { icon: Users, title: "Built for Teams", desc: "Tools designed for every role: loggers, truckers, land managers, and mills." },
+    ],
+  },
+  "about-us": {
+    title: "About Us",
+    subtitle: "Resources",
+    description: "Prime Cut Timber is on a mission to modernize the forestry industry. Learn about our team, our story, and why we're building the future of timber logistics.",
+    image: "/images/forest-bg.png",
+    features: [
+      { icon: Trees, title: "Our Mission", desc: "Bringing digital innovation to every corner of the forestry industry." },
+      { icon: Users, title: "Our Team", desc: "Built by forestry professionals and technology experts who understand your challenges." },
+      { icon: Globe, title: "Our Reach", desc: "Serving forestry operations across North America and beyond." },
+    ],
+  },
+  "solutions/integrations": {
+    title: "Integrations",
+    subtitle: "Solutions",
+    description: "Connect PCT with your existing tools and systems. Seamless integrations with accounting software, ERP systems, and forestry management platforms.",
+    image: "/images/app-devices.png",
+    features: [
+      { icon: Puzzle, title: "Accounting Systems", desc: "Export settlement and invoice data directly to QuickBooks, Sage, and more." },
+      { icon: Puzzle, title: "ERP Connections", desc: "Integrate with enterprise resource planning systems for unified operations." },
+      { icon: Puzzle, title: "Custom API", desc: "Build custom integrations with the PCT Developer API for your unique needs." },
+    ],
+  },
 };
 
 export default function GenericPage() {
@@ -158,7 +345,9 @@ export default function GenericPage() {
   const [, params3] = useRoute("/resources/:slug");
 
   const slug = params1?.slug || params2?.slug || params3?.slug || "";
-  const data = pageData[slug];
+  const prefix = params1 ? "solutions" : params2 ? "who-we-serve" : "resources";
+  const fullKey = `${prefix}/${slug}`;
+  const data = pageData[fullKey] || pageData[slug];
 
   if (!data) {
     return (
