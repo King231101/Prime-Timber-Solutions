@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Check } from "lucide-react";
 import { motion } from "framer-motion";
@@ -21,7 +22,7 @@ const roleOptions = [
 ];
 
 export default function TalkToExpert() {
-  const [formData, setFormData] = useState({ role: "", name: "", email: "", phone: "", company: "" });
+  const [formData, setFormData] = useState({ role: "", name: "", email: "", phone: "", company: "", message: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
@@ -35,7 +36,7 @@ export default function TalkToExpert() {
     try {
       await apiRequest("POST", "/api/contact", formData);
       toast({ title: "Request submitted!", description: "We'll get back to you within 24 hours." });
-      setFormData({ role: "", name: "", email: "", phone: "", company: "" });
+      setFormData({ role: "", name: "", email: "", phone: "", company: "", message: "" });
     } catch {
       toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
     } finally {
@@ -177,6 +178,18 @@ export default function TalkToExpert() {
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       data-testid="input-expert-company"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Textarea
+                      id="message"
+                      placeholder="Tell us briefly about your needs or questions..."
+                      value={formData.message}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                      rows={4}
+                      className="resize-none"
+                      data-testid="input-expert-message"
                     />
                   </div>
 

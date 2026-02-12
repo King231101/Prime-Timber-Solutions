@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { loginSchema, phoneLoginSchema, verifyCodeSchema, registerUserSchema, insertContactRequestSchema } from "@shared/schema";
+import { loginSchema, phoneLoginSchema, verifyCodeSchema, registerUserSchema, insertContactRequestSchema, signupSchema, userLoginSchema } from "@shared/schema";
 import bcrypt from "bcryptjs";
 import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
 
@@ -121,6 +121,75 @@ ${pages.map(p => `  <url>
       res.clearCookie("connect.sid");
       return res.json({ success: true });
     });
+  });
+
+  app.post("/api/signup", async (req, res) => {
+    try {
+      const parsed = signupSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: parsed.error.errors[0]?.message || "Invalid signup data" });
+      }
+
+      const { firstName, lastName, email, phone, companyName, yearsInCompany, password } = parsed.data;
+      const normalizedEmail = email.toLowerCase();
+
+      const existingEmail = await storage.getAppUserByEmail(normalizedEmail);
+      if (existingEmail) {
+        return res.status(409).json({ message: "An account with this email already exists" });
+      }
+
+      const existingPhone = await storage.getAppUserByPhone(phone);
+      if (existingPhone) {
+        return res.status(409).json({ message: "An account with this phone number already exists" });
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const user = await storage.createAppUser({
+        firstName,
+        lastName,
+        email: normalizedEmail,
+        phone,
+        companyName,
+        yearsInCompany,
+        password: hashedPassword,
+        isRegistered: true,
+      });
+
+      (req.session as any).appUserId = user.id;
+
+      return res.json({ success: true, user: { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email } });
+    } catch (error) {
+      console.error("Signup error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/user/login", async (req, res) => {
+    try {
+      const parsed = userLoginSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid email or password format" });
+      }
+
+      const { email, password } = parsed.data;
+      const user = await storage.getAppUserByEmail(email.toLowerCase());
+
+      if (!user || !user.password) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      const valid = await bcrypt.compare(password, user.password);
+      if (!valid) {
+        return res.status(401).json({ message: "Invalid email or password" });
+      }
+
+      (req.session as any).appUserId = user.id;
+
+      return res.json({ success: true, user: { id: user.id, firstName: user.firstName, lastName: user.lastName, email: user.email } });
+    } catch (error) {
+      console.error("User login error:", error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
   });
 
   app.get("/api/admin/users", async (req, res) => {

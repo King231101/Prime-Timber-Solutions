@@ -13,6 +13,7 @@ export interface IStorage {
   createAdmin(admin: InsertAdminUser): Promise<AdminUser>;
 
   getAppUserByPhone(phone: string): Promise<AppUser | undefined>;
+  getAppUserByEmail(email: string): Promise<AppUser | undefined>;
   getAppUserById(id: string): Promise<AppUser | undefined>;
   createAppUser(user: InsertAppUser): Promise<AppUser>;
   updateAppUser(id: string, data: Partial<InsertAppUser>): Promise<AppUser>;
@@ -45,6 +46,11 @@ export class DatabaseStorage implements IStorage {
 
   async getAppUserByPhone(phone: string): Promise<AppUser | undefined> {
     const [user] = await db.select().from(appUsers).where(eq(appUsers.phone, phone));
+    return user || undefined;
+  }
+
+  async getAppUserByEmail(email: string): Promise<AppUser | undefined> {
+    const [user] = await db.select().from(appUsers).where(eq(appUsers.email, email));
     return user || undefined;
   }
 

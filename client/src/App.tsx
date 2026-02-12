@@ -11,6 +11,7 @@ import Contact from "@/pages/Contact";
 import TalkToExpert from "@/pages/TalkToExpert";
 import Pricing from "@/pages/Pricing";
 import GenericPage from "@/pages/GenericPage";
+import Signup from "@/pages/Signup";
 import UserLogin from "@/pages/UserLogin";
 import UserDashboard from "@/pages/UserDashboard";
 import UserProfile from "@/pages/UserProfile";
@@ -21,6 +22,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/login" component={Login} />
+      <Route path="/signup" component={Signup} />
       <Route path="/admin" component={Admin} />
       <Route path="/contact" component={Contact} />
       <Route path="/talk-to-expert" component={TalkToExpert} />

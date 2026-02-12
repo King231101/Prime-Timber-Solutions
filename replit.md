@@ -4,6 +4,7 @@
 A clone of the Waldo Logs (waldologs.com) forestry platform, rebranded as "Prime Cut Timber" (PCT). The site features digital load ticket management for the forestry industry with a full marketing homepage, phone-based user authentication, user dashboard, company setup wizard, admin login, and multiple sub-pages.
 
 ## Recent Changes
+- **Feb 12, 2026**: User sign-up system - Added email/password signup page (/signup) with fields: name, email, phone, company name, years in company, password. Login page now supports both admin and user login, with "Sign up" link. Signed-up users appear in admin dashboard with email, company, and years columns. Added message textarea to Talk to Expert form; messages display in admin contact requests tab.
 - **Feb 11, 2026**: Content & branding update - Redesigned PCT logo (orange icon + stacked text). Added image carousel/slider section before FAQ with 4 platform screenshots, auto-play, and navigation. Awards & Certifications section with 3 generated certificate images. Expanded case studies from 3 to 6 (added Sawmill, Sustainability, Mill categories). Expanded blog articles from 3 to 6. Contact form now saves to DB (contactRequests table) with admin dashboard tab for viewing submissions. Support email support@primecuttimber.com added to footer. Martijn photo replaced avatar on contact page.
 - **Feb 11, 2026**: User auth system - Phone-based login/signup flow (phone → code verification → name/DOB registration). User dashboard with sidebar (Settlements, Company, Profile), weather & diesel price cards, notifications, pinned jobs. Profile page with avatar, logout, My Companies, Imperial/Metric preferences. Company setup wizard (3-step: Role → Name → Team). Admin dashboard updated to show all registered users with company details. Hero image replaced with CDN digital-trip-tickets-progress.png.
 - **Feb 11, 2026**: Major update - Redesigned dropdown menus (Solutions 4-column mega-menu, Who We Serve with 6 roles, Resources with 5 items). Redesigned Contact page to "Talk with an Expert" layout with Martijn Craig Volman. Updated phone to (407) 813-5384. Redesigned Footer with newsletter signup, social icons, comprehensive link columns. Replaced placeholder images with real CDN product screenshots throughout LogoBar, HowItWorks, and Benefits sections.
@@ -14,6 +15,8 @@ A clone of the Waldo Logs (waldologs.com) forestry platform, rebranded as "Prime
 - **Backend**: Express.js + PostgreSQL + Drizzle ORM
 - **Auth**: 
   - Admin login with email/password (bcryptjs + express-session)
+  - User signup with email/password + profile details (name, phone, company, years)
+  - User login with email/password (redirects to dashboard)
   - User login with phone number + SMS code verification (simulated in dev, code returned in API response)
   - Replit Auth integration also available
 - **Database**: PostgreSQL with admin_users, app_users, companies, team_members, contact_requests, sessions, users tables
@@ -37,13 +40,15 @@ A clone of the Waldo Logs (waldologs.com) forestry platform, rebranded as "Prime
 
 ## Routes
 - `/` - Homepage
+- `/login` - Login page (admin + user login, with sign-up link)
+- `/signup` - User sign-up page
 - `/app-login` - User phone login
 - `/dashboard` - User dashboard (requires user auth)
 - `/dashboard/profile` - User profile
 - `/dashboard/company` - Company setup wizard
-- `/login` - Admin login
 - `/admin` - Admin dashboard (requires admin auth)
 - `/contact` - Contact page
+- `/talk-to-expert` - Talk to an Expert page
 - `/pricing` - Pricing page
 
 ## Admin Credentials

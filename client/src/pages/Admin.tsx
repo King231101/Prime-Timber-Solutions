@@ -9,8 +9,11 @@ import { apiRequest } from "@/lib/queryClient";
 interface UserWithCompanies {
   id: string;
   phone: string;
+  email: string | null;
   firstName: string | null;
   lastName: string | null;
+  companyName: string | null;
+  yearsInCompany: string | null;
   dateOfBirth: string | null;
   unitPreference: string | null;
   isRegistered: boolean | null;
@@ -209,11 +212,11 @@ export default function Admin() {
                   <thead>
                     <tr className="border-b border-neutral-200 dark:border-neutral-700">
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Name</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Email</th>
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Phone</th>
-                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">DOB</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Company</th>
+                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Years</th>
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Registered</th>
-                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Companies</th>
-                      <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Roles</th>
                       <th className="text-left py-3 px-2 text-xs font-semibold text-muted-foreground uppercase">Joined</th>
                     </tr>
                   </thead>
@@ -229,8 +232,16 @@ export default function Admin() {
                             ? `${user.firstName} ${user.lastName}`
                             : "\u2014"}
                         </td>
+                        <td className="py-3 px-2 text-muted-foreground">
+                          {user.email ? (
+                            <a href={`mailto:${user.email}`} className="text-orange-500 hover:underline">{user.email}</a>
+                          ) : "\u2014"}
+                        </td>
                         <td className="py-3 px-2 text-muted-foreground">{user.phone}</td>
-                        <td className="py-3 px-2 text-muted-foreground">{user.dateOfBirth || "\u2014"}</td>
+                        <td className="py-3 px-2 text-muted-foreground">
+                          {user.companyName || (user.companies.length > 0 ? user.companies.map(c => c.name).join(", ") : "\u2014")}
+                        </td>
+                        <td className="py-3 px-2 text-muted-foreground">{user.yearsInCompany || "\u2014"}</td>
                         <td className="py-3 px-2">
                           <span className={`inline-block px-2 py-0.5 rounded-md text-xs font-medium ${
                             user.isRegistered
@@ -239,16 +250,6 @@ export default function Admin() {
                           }`}>
                             {user.isRegistered ? "Yes" : "No"}
                           </span>
-                        </td>
-                        <td className="py-3 px-2 text-muted-foreground">
-                          {user.companies.length > 0
-                            ? user.companies.map(c => c.name).join(", ")
-                            : "\u2014"}
-                        </td>
-                        <td className="py-3 px-2 text-muted-foreground">
-                          {user.companies.length > 0
-                            ? user.companies.flatMap(c => c.roles || []).join(", ") || "\u2014"
-                            : "\u2014"}
                         </td>
                         <td className="py-3 px-2 text-muted-foreground text-xs">
                           {user.createdAt
@@ -307,7 +308,9 @@ export default function Admin() {
                         <td className="py-3 px-2 text-muted-foreground">{req.phone || "\u2014"}</td>
                         <td className="py-3 px-2 text-muted-foreground">{req.company || "\u2014"}</td>
                         <td className="py-3 px-2 text-muted-foreground">{req.role || "\u2014"}</td>
-                        <td className="py-3 px-2 text-muted-foreground text-xs max-w-[200px] truncate">{req.message || "\u2014"}</td>
+                        <td className="py-3 px-2 text-muted-foreground text-xs max-w-[300px]">
+                          <span className="line-clamp-3">{req.message || "\u2014"}</span>
+                        </td>
                         <td className="py-3 px-2 text-muted-foreground text-xs">
                           {req.createdAt
                             ? new Date(req.createdAt).toLocaleDateString()

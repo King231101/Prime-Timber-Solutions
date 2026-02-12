@@ -22,16 +22,45 @@ export default function Login() {
     setIsLoading(true);
 
     try {
-      const res = await apiRequest("POST", "/api/admin/login", { email, password });
-      const data = await res.json();
-      if (data.success) {
-        toast({ title: "Login successful", description: "Welcome back!" });
-        setLocation("/admin");
+      const adminRes = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+      if (adminRes.ok) {
+        const adminData = await adminRes.json();
+        if (adminData.success) {
+          toast({ title: "Login successful", description: "Welcome back!" });
+          setLocation("/admin");
+          return;
+        }
       }
-    } catch (error: any) {
+
+      const userRes = await fetch("/api/user/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+      if (userRes.ok) {
+        const userData = await userRes.json();
+        if (userData.success) {
+          toast({ title: "Login successful", description: "Welcome back!" });
+          setLocation("/dashboard");
+          return;
+        }
+      }
+
       toast({
         title: "Login failed",
-        description: error.message || "Invalid email or password",
+        description: "Invalid email or password",
+        variant: "destructive",
+      });
+    } catch {
+      toast({
+        title: "Login failed",
+        description: "Something went wrong. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -172,8 +201,13 @@ export default function Login() {
             </form>
           </Card>
 
-          <p className="text-xs text-muted-foreground text-center mt-6">
-            Admin access only. Contact your administrator for credentials.
+          <p className="text-sm text-muted-foreground text-center mt-6">
+            Don't have an account?{" "}
+            <Link href="/signup">
+              <span className="text-orange-600 font-medium cursor-pointer hover:underline" data-testid="link-go-to-signup">
+                Sign up
+              </span>
+            </Link>
           </p>
         </motion.div>
       </div>

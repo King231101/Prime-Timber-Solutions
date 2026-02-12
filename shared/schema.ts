@@ -30,8 +30,12 @@ export type LoginInput = z.infer<typeof loginSchema>;
 export const appUsers = pgTable("app_users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   phone: varchar("phone", { length: 20 }).notNull().unique(),
+  email: varchar("email", { length: 255 }),
+  password: text("password"),
   firstName: varchar("first_name", { length: 100 }),
   lastName: varchar("last_name", { length: 100 }),
+  companyName: varchar("company_name", { length: 255 }),
+  yearsInCompany: varchar("years_in_company", { length: 50 }),
   dateOfBirth: date("date_of_birth"),
   profileImageUrl: varchar("profile_image_url"),
   unitPreference: varchar("unit_preference", { length: 20 }).default("imperial"),
@@ -114,4 +118,21 @@ export const registerUserSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   dateOfBirth: z.string().min(1, "Date of birth is required"),
+});
+
+export const signupSchema = z.object({
+  firstName: z.string().min(1, "First name is required"),
+  lastName: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().min(10, "Phone number is required"),
+  companyName: z.string().min(1, "Company name is required"),
+  yearsInCompany: z.string().min(1, "Years in company is required"),
+  password: z.string().min(6, "Password must be at least 6 characters"),
+});
+
+export type SignupInput = z.infer<typeof signupSchema>;
+
+export const userLoginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(1, "Password is required"),
 });
