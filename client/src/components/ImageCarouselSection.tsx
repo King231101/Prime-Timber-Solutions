@@ -24,6 +24,7 @@ const slides = [
     image: teamPhotoPath,
     title: "The PCT Team",
     subtitle: "Our dedicated team of forestry professionals bringing digital innovation to every harvest operation.",
+    objectPosition: "top",
   },
 ];
 
@@ -94,7 +95,7 @@ export default function ImageCarouselSection() {
                   src={slides[current].image}
                   alt={slides[current].title}
                   referrerPolicy="no-referrer"
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className={`absolute inset-0 w-full h-full object-cover ${slides[current].objectPosition === "top" ? "object-top" : "object-center"}`}
                   custom={direction}
                   variants={variants}
                   initial="enter"
