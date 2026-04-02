@@ -10,7 +10,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import martijnPhoto from "@assets/IMG_0610_1770844232329.jpg";
-import ceciliaPhoto from "@assets/Screenshot_2026-04-02_at_7.53.21_AM_1775130804371.png";
+import ceciliaPhoto from "@assets/Screenshot_2026-04-02_at_7.19.34_AM_1775132308663.png";
 
 const roleOptions = [
   "Land Manager",
