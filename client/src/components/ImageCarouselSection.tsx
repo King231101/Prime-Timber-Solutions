@@ -4,7 +4,14 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import teamPhotoPath from "@assets/Screenshot_2026-04-02_at_9.49.50_AM_1775137796661.png";
 
-const slides = [
+type Slide = {
+  image: string;
+  title: string;
+  subtitle: string;
+  objectPosition?: "top" | "center";
+};
+
+const slides: Slide[] = [
   {
     image: "/images/waldo-jobs.png",
     title: "Digital Job Management",
