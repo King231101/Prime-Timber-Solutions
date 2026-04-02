@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import teamPhotoPath from "@assets/Screenshot_2026-04-02_at_7.52.44_AM_1775132175348.png";
+import teamPhotoPath from "@assets/Screenshot_2026-04-02_at_9.00.31_AM_1775134847333.png";
 
 const slides = [
   {
