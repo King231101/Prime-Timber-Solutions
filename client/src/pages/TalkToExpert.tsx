@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import martijnPhoto from "@assets/IMG_0610_1770844232329.jpg";
+import ceciliaPhoto from "@assets/Screenshot_2026-04-02_at_7.19.34_AM_1775131536779.png";
 
 const roleOptions = [
   "Land Manager",
@@ -70,18 +71,34 @@ export default function TalkToExpert() {
                   Get answers for your operation, learn about integrations, or see a demo of the platform.
                 </p>
 
-                <div className="flex items-center gap-4 mb-10 p-4 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 max-w-sm">
-                  <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
-                    <img
-                      src={martijnPhoto}
-                      alt="Martijn Craig Volman"
-                      className="w-full h-full object-cover"
-                      data-testid="img-expert-photo"
-                    />
+                <div className="flex flex-col gap-3 mb-10 max-w-sm">
+                  <div className="flex items-center gap-4 p-4 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+                    <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                      <img
+                        src={martijnPhoto}
+                        alt="Martijn Craig Volman"
+                        className="w-full h-full object-cover"
+                        data-testid="img-expert-photo"
+                      />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-foreground" data-testid="text-expert-name">Martijn Craig Volman</div>
+                      <div className="text-xs text-muted-foreground">Supply Chain & Implementation</div>
+                    </div>
                   </div>
-                  <div>
-                    <div className="text-sm font-bold text-foreground" data-testid="text-expert-name">Martijn Craig Volman</div>
-                    <div className="text-xs text-muted-foreground">Supply Chain & Implementation</div>
+                  <div className="flex items-center gap-4 p-4 rounded-md bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700">
+                    <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                      <img
+                        src={ceciliaPhoto}
+                        alt="Cecilia Graffin"
+                        className="w-full h-full object-cover"
+                        data-testid="img-expert-photo-cecilia"
+                      />
+                    </div>
+                    <div>
+                      <div className="text-sm font-bold text-foreground" data-testid="text-expert-name-cecilia">Cecilia Graffin</div>
+                      <div className="text-xs text-muted-foreground">Project Manager</div>
+                    </div>
                   </div>
                 </div>
 

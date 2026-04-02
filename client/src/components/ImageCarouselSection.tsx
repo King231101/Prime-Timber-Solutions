@@ -2,28 +2,31 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import teamPhotoPath from "@assets/Screenshot_2026-02-11_at_5.30.24_PM_1770849319133.png";
+import slide1 from "@assets/Screenshot_2026-04-02_at_7.23.58_AM_1775131655155.png";
+import slide2 from "@assets/Screenshot_2026-04-02_at_7.52.44_AM_1775131628678.png";
+import slide3 from "@assets/Screenshot_2026-04-02_at_7.53.21_AM_1775130804371.png";
+import slide4 from "@assets/Screenshot_2026-04-02_at_7.58.28_AM_1775131111685.png";
 
 const slides = [
   {
-    image: "/images/waldo-jobs.png",
-    title: "Digital Job Management",
-    subtitle: "Create and manage harvest jobs with real-time status tracking across your entire operation.",
+    image: slide1,
+    title: "The PCT Community",
+    subtitle: "Building stronger forestry operations through collaboration and hands-on training with logging crews.",
   },
   {
-    image: "/images/rowlee-farms-trucking.jpg",
-    title: "Load Tracking & Tickets",
-    subtitle: "Replace paper tickets with digital load tracking that works offline and syncs automatically.",
+    image: slide2,
+    title: "Expert-Led Implementation",
+    subtitle: "Our specialists work alongside your team to ensure a smooth transition to digital load ticket management.",
   },
   {
-    image: "/images/lyme-great-lakes-timberlands.jpg",
-    title: "In the Field Operations",
-    subtitle: "Digitize field operations across thousands of acres with offline-capable tools for every role.",
+    image: slide3,
+    title: "Platform Overview",
+    subtitle: "A comprehensive digital platform designed specifically for every role in the forestry supply chain.",
   },
   {
-    image: teamPhotoPath,
-    title: "The PCT Team",
-    subtitle: "Our dedicated team of forestry professionals bringing digital innovation to every harvest operation.",
+    image: slide4,
+    title: "Dedicated Support Team",
+    subtitle: "Connect with our forestry experts for personalized guidance, demos, and ongoing support.",
   },
 ];
 
