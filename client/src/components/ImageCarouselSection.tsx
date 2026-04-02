@@ -2,26 +2,26 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import slide1 from "@assets/Screenshot_2026-04-02_at_7.23.58_AM_1775131655155.png";
-import slide2 from "@assets/Screenshot_2026-04-02_at_7.52.44_AM_1775131628678.png";
-import slide3 from "@assets/Screenshot_2026-04-02_at_7.53.21_AM_1775130804371.png";
+import slide1 from "@assets/Screenshot_2026-04-02_at_7.19.34_AM_1775131536779.png";
+import slide2 from "@assets/Screenshot_2026-04-02_at_7.23.58_AM_1775131655155.png";
+import slide3 from "@assets/Screenshot_2026-04-02_at_7.52.44_AM_1775131628678.png";
 import slide4 from "@assets/Screenshot_2026-04-02_at_7.58.28_AM_1775131111685.png";
 
 const slides = [
   {
     image: slide1,
+    title: "Meet Our Team",
+    subtitle: "Dedicated forestry professionals committed to delivering digital innovation to every harvest operation.",
+  },
+  {
+    image: slide2,
     title: "The PCT Community",
     subtitle: "Building stronger forestry operations through collaboration and hands-on training with logging crews.",
   },
   {
-    image: slide2,
+    image: slide3,
     title: "Expert-Led Implementation",
     subtitle: "Our specialists work alongside your team to ensure a smooth transition to digital load ticket management.",
-  },
-  {
-    image: slide3,
-    title: "Platform Overview",
-    subtitle: "A comprehensive digital platform designed specifically for every role in the forestry supply chain.",
   },
   {
     image: slide4,
