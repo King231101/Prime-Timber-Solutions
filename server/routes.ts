@@ -4,6 +4,9 @@ import { storage } from "./storage";
 import { loginSchema, phoneLoginSchema, verifyCodeSchema, registerUserSchema, insertContactRequestSchema, signupSchema, userLoginSchema } from "@shared/schema";
 import bcrypt from "bcryptjs";
 import { setupAuth, registerAuthRoutes } from "./replit_integrations/auth";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const verificationCodes: Map<string, { code: string; expires: number }> = new Map();
 
@@ -217,6 +220,30 @@ ${pages.map(p => `  <url>
         return res.status(400).json({ message: "Invalid form data" });
       }
       const request = await storage.createContactRequest(parsed.data);
+
+      // Send email notification via Resend
+      const { name, email, phone, message, company } = parsed.data as any;
+      try {
+        await resend.emails.send({
+          from: "Prime Cut Timber <support@priimescuttimber.com>",
+          to: "support@priimescuttimber.com",
+          subject: `New Contact Request from ${name || email}`,
+          html: `
+            <h2>New Contact Request</h2>
+            <p><strong>Name:</strong> ${name || "N/A"}</p>
+            <p><strong>Email:</strong> ${email || "N/A"}</p>
+            <p><strong>Phone:</strong> ${phone || "N/A"}</p>
+            <p><strong>Company:</strong> ${company || "N/A"}</p>
+            <p><strong>Message:</strong></p>
+            <p>${message || "N/A"}</p>
+          `,
+        });
+        console.log("Contact notification email sent successfully");
+      } catch (emailError) {
+        console.error("Failed to send contact notification email:", emailError);
+        // Don't fail the request if email fails — contact is still saved
+      }
+
       return res.json({ success: true, request });
     } catch (error) {
       console.error("Contact request error:", error);
