@@ -224,19 +224,111 @@ ${pages.map(p => `  <url>
       // Send email notification via Resend
       const { name, email, phone, message, company } = parsed.data as any;
       try {
+        const brandedHtml = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Contact Request – Prime Cut Timber</title>
+</head>
+<body style="margin:0;padding:0;background-color:#f4f4f5;font-family:'Helvetica Neue',Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background-color:#f4f4f5;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;border-radius:10px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.10);">
+
+          <!-- HEADER -->
+          <tr>
+            <td style="background-color:#171717;padding:28px 36px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="middle">
+                    <!-- Logo icon -->
+                    <table cellpadding="0" cellspacing="0">
+                      <tr>
+                        <td style="background-color:#ea580c;border-radius:8px;width:40px;height:40px;text-align:center;vertical-align:middle;" width="40" height="40">
+                          <img src="https://priimescuttimber.com/favicon.png" width="24" height="24" alt="" style="display:block;margin:8px auto;" onerror="this.style.display='none'" />
+                        </td>
+                        <td style="padding-left:12px;vertical-align:middle;">
+                          <div style="font-family:'Montserrat',Arial,sans-serif;font-size:16px;font-weight:900;letter-spacing:0.5px;color:#ffffff;line-height:1;">PRIME CUT</div>
+                          <div style="font-family:'Montserrat',Arial,sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;color:#ea580c;line-height:1;margin-top:3px;">TIMBER</div>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td align="right" valign="middle">
+                    <span style="background-color:#ea580c;color:#ffffff;font-size:11px;font-weight:700;letter-spacing:1px;padding:5px 14px;border-radius:20px;text-transform:uppercase;">New Enquiry</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ORANGE ACCENT BAR -->
+          <tr>
+            <td style="background-color:#ea580c;height:4px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- BODY -->
+          <tr>
+            <td style="background-color:#ffffff;padding:36px 36px 28px;">
+              <h1 style="margin:0 0 6px;font-size:22px;font-weight:800;color:#171717;font-family:'Helvetica Neue',Arial,sans-serif;">New Contact Request</h1>
+              <p style="margin:0 0 28px;font-size:14px;color:#6b7280;">Someone reached out through your website. Details below.</p>
+
+              <!-- Info rows -->
+              <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;">
+                <tr style="background-color:#fafafa;">
+                  <td style="padding:14px 18px;width:120px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;border-bottom:1px solid #e5e7eb;">Name</td>
+                  <td style="padding:14px 18px;font-size:15px;color:#171717;font-weight:600;border-bottom:1px solid #e5e7eb;">${name || "—"}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;border-bottom:1px solid #e5e7eb;">Email</td>
+                  <td style="padding:14px 18px;font-size:15px;border-bottom:1px solid #e5e7eb;"><a href="mailto:${email}" style="color:#ea580c;text-decoration:none;font-weight:600;">${email || "—"}</a></td>
+                </tr>
+                <tr style="background-color:#fafafa;">
+                  <td style="padding:14px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;border-bottom:1px solid #e5e7eb;">Phone</td>
+                  <td style="padding:14px 18px;font-size:15px;color:#171717;font-weight:600;border-bottom:1px solid #e5e7eb;">${phone || "—"}</td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 18px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;">Company</td>
+                  <td style="padding:14px 18px;font-size:15px;color:#171717;font-weight:600;">${company || "—"}</td>
+                </tr>
+              </table>
+
+              <!-- Message block -->
+              <div style="margin-top:24px;">
+                <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#6b7280;margin-bottom:10px;">Message</div>
+                <div style="background-color:#fafafa;border:1px solid #e5e7eb;border-left:4px solid #ea580c;border-radius:6px;padding:16px 18px;font-size:15px;color:#374151;line-height:1.65;">${message || "—"}</div>
+              </div>
+
+              <!-- CTA -->
+              <div style="margin-top:28px;text-align:center;">
+                <a href="mailto:${email}" style="display:inline-block;background-color:#ea580c;color:#ffffff;font-size:14px;font-weight:700;padding:12px 28px;border-radius:6px;text-decoration:none;letter-spacing:0.3px;">Reply to ${name || "this enquiry"}</a>
+              </div>
+            </td>
+          </tr>
+
+          <!-- FOOTER -->
+          <tr>
+            <td style="background-color:#171717;padding:20px 36px;text-align:center;">
+              <p style="margin:0;font-size:12px;color:#6b7280;">© ${new Date().getFullYear()} Prime Cut Timber · <a href="https://priimescuttimber.com" style="color:#ea580c;text-decoration:none;">priimescuttimber.com</a></p>
+              <p style="margin:6px 0 0;font-size:11px;color:#4b5563;">This notification was sent because a visitor submitted the contact form on your website.</p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
         await resend.emails.send({
           from: "Prime Cut Timber <support@priimescuttimber.com>",
           to: "support@priimescuttimber.com",
           subject: `New Contact Request from ${name || email}`,
-          html: `
-            <h2>New Contact Request</h2>
-            <p><strong>Name:</strong> ${name || "N/A"}</p>
-            <p><strong>Email:</strong> ${email || "N/A"}</p>
-            <p><strong>Phone:</strong> ${phone || "N/A"}</p>
-            <p><strong>Company:</strong> ${company || "N/A"}</p>
-            <p><strong>Message:</strong></p>
-            <p>${message || "N/A"}</p>
-          `,
+          html: brandedHtml,
         });
         console.log("Contact notification email sent successfully");
       } catch (emailError) {
